@@ -28,7 +28,7 @@ class App extends React.Component {
       pctg : '0.00'
     })
     // Loading tesseract.js functions
-    const worker = await createWorker();
+    const worker = await createWorker('rus');
     // Loading language as 'English'
     await worker.loadLanguage('rus');
     await worker.initialize('rus');
@@ -47,7 +47,7 @@ class App extends React.Component {
     // Percentage
     var MAX_PARCENTAGE = 1 ;
     var DECIMAL_COUNT = 2 ;
-
+  
     if(m.status === "recognizing text") {
       var pctg = (m.progress / MAX_PARCENTAGE) * 100
       this.setState({
@@ -61,7 +61,7 @@ class App extends React.Component {
     this.worker = createWorker({
         logger: m => this.updateProgressAndLog(m),
     });
-  }
+  };
   render() {
     return (
       <div className="App">
@@ -73,7 +73,7 @@ class App extends React.Component {
                 onaddfile={(err,file) =>{
                   this.doOCR(file);
                 }}
-                onremovefile={(err,fiile) =>{
+                onremovefile={(err,file) =>{
                   this.setState({
                     ocrText : ''
                   })
