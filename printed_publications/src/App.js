@@ -5,6 +5,8 @@ import React from 'react'
 import { FilePond, registerPlugin } from 'react-filepond'
 import { createWorker } from 'tesseract.js'
 import './App.css'
+import Button from './ui-kit/button/button.ts'
+import SearchStyle from './ui-kit/search/search'
 
 registerPlugin(FilePondPluginImagePreview);
 
@@ -66,6 +68,51 @@ class App extends React.Component {
     return (
       <div className="App">
         <div className="container">
+        <Button 
+          width='142px'
+          height='52px'
+          background='#550DB2'
+          radius='10px'
+          border='none'
+          textColor='#FFF'
+          backgroundHover='#3F0789'
+          >Применить</Button>
+        <Button
+        width='142px'
+        height='52px'
+        background='#FEE'
+        radius='10px'
+        border='none'
+        textColor='#F44B4B'>Сбросить</Button>
+        <Button
+        width='180px'
+        height='36px'
+        background='#EAF3DE'
+        radius='6px'
+        border='1px solid #B8D395'
+        textColor='#6AB20D'
+        backgroundHover='#E3EBD7'
+        borderHover='1px solid #6AB20D'>Редактировать</Button>
+        <Button
+        width='125px'
+        height='36px'
+        background='#FEE'
+        radius='6px'
+        border='1px solid #F4C2C2'
+        textColor='#F44B4B'
+        backgroundHover='#FEE'
+        borderHover='1px solid #F44B4B'>Удалить</Button>
+        <Button
+        width='127px'
+        height='36px'
+        background='#F0EDF5'
+        radius='6px'
+        border='1px solid #D8C5F0'
+        textColor='#550DB2'
+        backgroundHover='#F0EDF5'
+        borderHover='1px solid #550DB2'>Экспорт</Button>
+        <SearchStyle>
+        </SearchStyle>
           <div style={{marginTop : "10%"}} className="row">
             <div className="col-md-4"></div>
               <div className="col-md-4">
