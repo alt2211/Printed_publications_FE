@@ -7,6 +7,9 @@ import { createWorker } from 'tesseract.js'
 import './App.css'
 import Button from './ui-kit/button/button.ts'
 import SearchStyle from './ui-kit/search/search'
+import  {Search} from './ui-kit/search/search'
+import StyledFrame, { Frame } from './ui-kit/filters/filters.js'
+import { Input } from './ui-kit/input/input.js'
 
 registerPlugin(FilePondPluginImagePreview);
 
@@ -111,6 +114,8 @@ class App extends React.Component {
         textColor='#550DB2'
         backgroundHover='#F0EDF5'
         borderHover='1px solid #550DB2'>Экспорт</Button>
+        <Frame svg="CalendarCheck.svg" name="Дата начала" />
+        <Search count="0"/>
         <SearchStyle>
         </SearchStyle>
           <div style={{marginTop : "10%"}} className="row">
