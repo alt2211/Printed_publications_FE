@@ -1,0 +1,36 @@
+.container {
+	width: 1824px;
+	height: 1194px;
+	margin: 22px 48px;
+	background: #fff;
+	border-radius: 16px;
+	padding: 48px 166px;
+}
+
+.containerOcr {
+	display: flex;
+	gap: 158px;
+}
+
+.inputImg {
+	width: 724px;
+	height: 661px;
+	background: #f0edf5;
+	border-radius: 16px;
+	align-self: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.dropImg {
+	width: 724px;
+	height: 661px;
+	background: #f0edf5;
+	border-radius: 16px;
+	align-self: center;
+	border: 1px dashed #550db2;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
