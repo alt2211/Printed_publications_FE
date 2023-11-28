@@ -5,11 +5,11 @@ import React from 'react'
 import { FilePond, registerPlugin } from 'react-filepond'
 import { createWorker } from 'tesseract.js'
 import './App.css'
+import Global from './global.ts'
 import Button from './ui-kit/button/button.ts'
-import SearchStyle from './ui-kit/search/search'
-import  {Search} from './ui-kit/search/search'
-import StyledFrame, { Frame } from './ui-kit/filters/filters.js'
-import { Input } from './ui-kit/input/input.js'
+import { Frame } from './ui-kit/filters/filters.js'
+import SearchStyle, { Search } from './ui-kit/search/search'
+import Layout from './ui/layout/layout.tsx'
 
 registerPlugin(FilePondPluginImagePreview);
 
@@ -71,6 +71,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <div className="container">
+        <Layout>
         <Button 
           width='142px'
           height='52px'
@@ -153,7 +154,9 @@ class App extends React.Component {
             </div>
           </div>
           <div className="ocr-text"></div>
+        </Layout>
         </div>
+        <Global />
       </div>
     );
   }
