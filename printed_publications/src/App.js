@@ -63,16 +63,20 @@ class App extends React.Component {
   componentDidMount() {
     // Logs the output object to Update Progress, which
     // checks for Tesseract JS status & Updates the progress
-    this.worker = createWorker({
-        logger: m => this.updateProgressAndLog(m),
-    });
+    
+    // this.worker = createWorker({
+    //     logger: m => this.updateProgressAndLog(m),
+    // });
   };
   render() {
     return (
       <div className="App">
         <div className="container">
         <Layout>
-        <Button 
+
+
+
+        {/* <Button 
           width='142px'
           height='52px'
           background='#550DB2'
@@ -114,11 +118,14 @@ class App extends React.Component {
         border='1px solid #D8C5F0'
         textColor='#550DB2'
         backgroundHover='#F0EDF5'
-        borderHover='1px solid #550DB2'>Экспорт</Button>
-        <Frame svg="CalendarCheck.svg" name="Дата начала" />
+        borderHover='1px solid #550DB2'>Экспорт</Button> */}
+
+
+
+        {/* <Frame svg="CalendarCheck.svg" name="Дата начала" />
         <Search count="0"/>
         <SearchStyle>
-        </SearchStyle>
+        </SearchStyle> */}
           <div style={{marginTop : "10%"}} className="row">
             <div className="col-md-4"></div>
               <div className="col-md-4">
