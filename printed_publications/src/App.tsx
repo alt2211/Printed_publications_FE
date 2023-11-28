@@ -18,7 +18,13 @@ export default () => {
                     },
                     Button: {
                         controlHeightLG: 52
-                    }
+                    },
+                    DatePicker: {
+                        controlHeightLG: 52
+                    },
+                    Select: {
+                        controlHeightLG: 52
+                    },
                 }
             }}
         >

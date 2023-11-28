@@ -3,6 +3,7 @@ import Layout from "../ui/layout/layout.tsx";
 import { Navigate, Route } from "react-router-dom";
 import Ocr from "../pages/Ocr.tsx";
 import Login from "../pages/Login.tsx";
+import Home from "../pages/Home.tsx";
 
 
 interface Page {
@@ -14,7 +15,8 @@ export default () => {
     const pages: Page[] = [
         { element: <Ocr/>, path: '/ocr' },
         { element: <Login/>, path: '/login' },
-        { element: <Navigate to='/ocr'/>, path: '*' },
+        { element: <Home/>, path: '/' },
+        { element: <Navigate to='/login'/>, path: '*' },
     ]
 
     return (

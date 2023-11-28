@@ -1,8 +1,8 @@
 import '../Styles/login.scss';
 import FormItem from "antd/es/form/FormItem";
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, notification } from "antd";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useNavigation } from "react-router-dom";
 
 const Authorization: React.FC = () => {
     const [page, setPage] = useState<string>('login')
@@ -36,16 +36,30 @@ const Authorization: React.FC = () => {
 };
 
 const LoginPage = () => {
+    const navigate = useNavigate()
+
+    const onFinish = ({ email, password }) => {
+        if (email === 'test@gmail.com' && password === 'qwer1234'){
+            navigate('/')
+        }
+        else {
+            notification.error({
+                message: 'Неправильный логин или пароль',
+                key: 'incorrectLogin'
+            })
+        }
+    }
+
     return (
-        <Form layout='vertical' style={{ width: '100%' }} size='large'>
-            <FormItem label='Электронная почта'>
+        <Form layout='vertical' style={{ width: '100%' }} size='large' onFinish={onFinish}>
+            <FormItem name='email' label='Электронная почта'>
                 <Input
                     type='email'
                     size='large' style={{ width: '100%' }}
                     placeholder='youremail@gmail.com'
                 />
             </FormItem>
-            <FormItem label='Пароль'>
+            <FormItem name='password' label='Пароль'>
                 <Input.Password
                     size='large' style={{ width: '100%' }}
                     placeholder='•••••••••'
@@ -62,6 +76,7 @@ const LoginPage = () => {
                 }}
                 size='large'
                 block
+                htmlType='submit'
             >
                 Продолжить
             </Button>
@@ -70,22 +85,29 @@ const LoginPage = () => {
 }
 
 const RegPage = () => {
+    const onFinish = ({ email, password, repeatPassword }) => {
+        notification.error({
+            message: 'Пользователь с такой почтой уже зарегистиррован',
+            key: 'incorrectLogin'
+        })
+    }
+
     return (
         <Form layout='vertical' style={{ width: '100%' }} size='large'>
-            <FormItem label='Электронная почта'>
+            <FormItem name='email' label='Электронная почта'>
                 <Input
                     type='email'
                     size='large' style={{ width: '100%' }}
                     placeholder='youremail@gmail.com'
                 />
             </FormItem>
-            <FormItem label='Пароль'>
+            <FormItem name='password' label='Пароль'>
                 <Input.Password
                     size='large' style={{ width: '100%' }}
                     placeholder='•••••••••'
                 />
             </FormItem>
-            <FormItem label='Повторите пароль'>
+            <FormItem name='repeatPassword' label='Повторите пароль'>
                 <Input.Password
                     size='large' style={{ width: '100%' }}
                     placeholder='•••••••••'
