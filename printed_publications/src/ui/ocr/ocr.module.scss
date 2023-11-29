@@ -1,0 +1,157 @@
+.container {
+	width: 1824px;
+	height: 970 px;
+	margin: 22px 48px;
+	margin-bottom: 0px;
+	background: #fff;
+	border-radius: 16px 16px 0 0;
+	padding: 48px 166px;
+}
+
+.containerOcr {
+	display: flex;
+	width: 742px;
+	height: 661 px;
+	gap:158px; 
+}
+
+.elements {
+	display: flex;
+}
+
+.inputField {
+	width: 592px;
+	height: 52px;
+	padding-left: 20px;
+	padding-top: 16px;
+	padding-bottom: 16px;
+	border-radius: 10px;
+	border: 1px solid #E6EAF8;
+	transition: 0.5s;
+}
+
+.inputField:hover {
+	border-color: #550DB2;
+  }
+
+ .inputField:focus {
+	border-color: #D8C5F0; 
+	outline: none;
+  }
+
+  .inputFieldName{
+	margin-bottom: 8px;
+	margin-top:10px;
+  }
+
+  .propertiesList{
+	display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .bottom{
+	width: 1824px; 
+	height: 84px;
+	border-top: 1px solid #E6EAF8;
+	background: #FFF;
+	margin-left: 48px;
+	border-radius: 0 0 16px 16px;  
+	display: flex;
+  }
+
+  .arrowl{
+	display: flex;
+	width: 52px;
+	height: 52px;
+	padding: 16px;
+	justify-content: center;
+	align-items: center;
+	flex-shrink: 0;
+	border-radius: 10px;
+	border: 1px solid #B08DDE;
+	background: #FFF;
+	margin-right: 4px;
+	margin-left: 4px;
+	cursor: pointer;
+  }
+
+  .counter{
+	width: 98px;
+	height: 52px;
+	display: inline-flex;
+	padding: 16px 22px;
+	justify-content: center;
+	align-items: center;
+	border-radius: 10px;
+	background: #F0EDF5;
+	color: #550DB2;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: 20px;
+  }
+  .addMore{
+	display: inline-flex;
+	padding: 16px 38px;
+	justify-content: center;
+	align-items: center;
+	border-radius: 10px;
+	background: #6AB20D;
+	border: none;
+	color: #FFF;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 20px;
+	margin-right: 16px;
+	cursor: pointer;
+  }
+  .save{
+	display: inline-flex;
+	padding: 16px 38px;
+	justify-content: center;
+	align-items: center;
+	border-radius: 10px;
+	background: #550DB2;
+	border: none;
+	color: #FFF;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 20px;
+	cursor: pointer;
+  }
+
+  .bottomElement1{
+	display:flex;
+	align-items: center;
+	
+  }
+  .bottomElement2{
+	display:flex;
+	align-items: center;
+  }
+
+.inputImg {
+	width: 724px;
+	height: 661px;
+	background: #f0edf5;
+	border-radius: 16px;
+	align-self: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.dropImg {
+	width: 724px;
+	height: 661px;
+	background: #f0edf5;
+	border-radius: 16px;
+	align-self: center;
+	border: 1px dashed #550db2;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}

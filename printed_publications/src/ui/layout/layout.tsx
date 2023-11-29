@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import Button from '../../ui-kit/button/button.ts'
 import style from './layout.module.scss'
 
@@ -6,8 +7,9 @@ const Layout = ({ children }) => {
     return (
         <>
             <div className={style.customContainer}>
-                <img src="Logo.svg" alt="Логотип"/>
+                <Link to={'/'}><img src="Logo.svg" alt="Логотип"/></Link>
                 <div className={style.buttons}>
+                    <Link to={'/ocr'} style={{marginRight: '8px' }}>
                     <Button
                         width='116px'
                         height='43px'
@@ -22,7 +24,7 @@ const Layout = ({ children }) => {
                         fontWeight='400'
                         fontlineHeight='120%'>
                         Добавить
-                    </Button>
+                    </Button></Link>
                     <Button
                         width='126px'
                         height='43px'
@@ -53,6 +55,7 @@ const Layout = ({ children }) => {
                         fontlineHeight='120%'>
                         Помощь
                     </Button>
+                    <Link to={'/login'}>
                     <Button
                         width='90px'
                         height='43px'
@@ -68,7 +71,7 @@ const Layout = ({ children }) => {
                         fontWeight='400'
                         fontlineHeight='120%'>
                         Выйти
-                    </Button>
+                    </Button></Link>
                 </div>
             </div>
             <main>{children}</main>

@@ -1,8 +1,8 @@
-import '../Styles/login.scss';
-import FormItem from "antd/es/form/FormItem";
-import { Button, Form, Input, notification } from "antd";
-import { useState } from "react";
-import { Link, useNavigate, useNavigation } from "react-router-dom";
+import { Button, Form, Input, notification } from "antd"
+import FormItem from "antd/es/form/FormItem"
+import { useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
+import '../Styles/login.scss'
 
 const Authorization: React.FC = () => {
     const [page, setPage] = useState<string>('login')
