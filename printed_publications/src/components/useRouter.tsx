@@ -4,7 +4,7 @@ import { Navigate, Route } from "react-router-dom";
 import Ocr from "../pages/Ocr.tsx";
 import Login from "../pages/Login.tsx";
 import Home from "../pages/Home.tsx";
-
+import Settings from "../pages/Settings.tsx";
 
 interface Page {
     element: ReactNode,
@@ -17,6 +17,7 @@ export default () => {
         { element: <Login/>, path: '/login' },
         { element: <Home/>, path: '/' },
         { element: <Navigate to='/login'/>, path: '*' },
+        { element: <Settings/>, path: '/settings'},
     ]
 
     return (
