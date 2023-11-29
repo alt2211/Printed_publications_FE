@@ -88,7 +88,7 @@ export default () => {
 	}
 
 	const [currentPage, setCurrentPage] = useState(1)
-	const totalPages = 52
+	const totalPages = 1
 	let fieldValues = ['-', '-', '-', '-', '-', '-', '-', '-', '-']
 	let fieldValuesTEST = ['1', '2', '3', '4', '5', '6', '8', '9', '10']
 	const goToPreviousPage = () => {
@@ -221,7 +221,7 @@ export default () => {
 					</div>
 					<button
 						className={style.arrowl}
-						style={{ marginRight: '426px' }}
+						style={{ marginRight: '394px' }}
 						onClick={goToNextPage}
 					>
 						<img src='ArrowRight.svg' alt='Правая стрелка' />
