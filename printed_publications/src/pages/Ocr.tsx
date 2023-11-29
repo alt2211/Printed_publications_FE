@@ -51,6 +51,10 @@ export default () => {
 			}
 		}
 
+		const showImg = () => {
+			document.createElement('img')
+		}
+
 		return drag ? (
 			<div
 				onDragStart={e => dragStartHandler(e)}
@@ -59,7 +63,7 @@ export default () => {
 				onDrop={e => onDropHandler(e)}
 				className={style.dropImg}
 			>
-				Распознание текста
+				<img src='testpng.png' alt='Логотип' height='637px' width='408px' />
 			</div>
 		) : (
 			<div
@@ -89,7 +93,17 @@ export default () => {
 
 	const [currentPage, setCurrentPage] = useState(1)
 	const totalPages = 1
-	let fieldValues = ['-', '-', '-', '-', '-', '-', '-', '-', '-']
+	let fieldValues = [
+		'882',
+		'84(2Рос-Рус)6-44',
+		'Горшков В. С.',
+		'АСТ-ПРЕСС',
+		'2001',
+		'5-7805-0685-Х',
+		'Москва',
+		'-',
+		'',
+	]
 	let fieldValuesTEST = ['1', '2', '3', '4', '5', '6', '8', '9', '10']
 	const goToPreviousPage = () => {
 		if (currentPage > 1) {
@@ -149,7 +163,7 @@ export default () => {
 							)}
 						</div>
 					</div>
-					<div className={style.propertiesList}>
+					{/* <div className={style.propertiesList}>
 						<div className={style.inputFieldName}>ББК</div>
 						<input
 							className={style.inputField}
@@ -204,7 +218,7 @@ export default () => {
 							name='description'
 							value={fieldValues[8]}
 						></input>
-					</div>
+					</div> */}
 				</div>
 			</div>
 			<div className={style.bottom}>
