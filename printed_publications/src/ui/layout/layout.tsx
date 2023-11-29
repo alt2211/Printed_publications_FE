@@ -25,7 +25,8 @@ const Layout = ({ children }) => {
                         fontlineHeight='120%'>
                         Добавить
                     </Button></Link>
-                    <Button
+                    <Link to={'/settings'} style={{marginRight: '8px'}}>
+                        <Button
                         width='126px'
                         height='43px'
                         background='#F0EDF5'
@@ -39,7 +40,8 @@ const Layout = ({ children }) => {
                         fontWeight='400'
                         fontlineHeight='120%'>
                         Настройки
-                    </Button>
+                        </Button>
+                    </Link>
                     <Button
                         width='106px'
                         height='43px'
