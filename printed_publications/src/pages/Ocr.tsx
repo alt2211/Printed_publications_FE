@@ -101,9 +101,10 @@ export default () => {
 
 			<div className={style.container}>
 				<h1 style={{ marginBottom: '52px' }}>Добавление печатных изданий</h1>
+				<div className={style.elements}>
 				<div className={style.containerOcr}>
 					{DragDropFile()}
-					<div>
+					<div className={style.containerElement}>
 						{isLoading ? (
 							<Skeleton loading />
 						) : (
@@ -111,7 +112,40 @@ export default () => {
 						)}
 					</div>
 				</div>
+				<div className={style.propertiesList} >
+					<div className={style.inputFieldName}>ББК</div>
+					<input className={style.inputField} name='BBK'></input>
+					<div className={style.inputFieldName}>УДК</div>
+					<input className={style.inputField} name='YDK'></input>
+					<div className={style.inputFieldName}>Автор</div>
+					<input className={style.inputField} name='author'></input>
+					<div className={style.inputFieldName}>Название издания</div>
+					<input className={style.inputField} name='publicationTitle'></input>
+					<div className={style.inputFieldName}>Год публикации</div>
+					<input className={style.inputField} name='publicationDate'></input>
+					<div className={style.inputFieldName}>ISBN</div>
+					<input className={style.inputField} name='ISBN'></input>
+					<div className={style.inputFieldName}>Город издания</div> 
+					<input className={style.inputField} name='year'></input> 
+					<div className={style.inputFieldName}>Тип издания</div> 
+					<input className={style.inputField} name='type'></input> 
+					<div className={style.inputFieldName}>Описание</div> 
+					<input className={style.inputField} name='description'></input> 
+				</div>
+				</div>
 			</div>
+			<div className={style.bottom}>
+				<div className={style.bottomElement1}>
+					<button className={style.arrowl} style={{marginLeft : '807px '}}><img src="ArrowLeft.svg" alt="Левая стрелка"/></button>
+					<div className={style.counter}>1 из 52</div>
+					<button className={style.arrowl} style={{marginRight : '426px'}}><img src="ArrowRight.svg" alt="Правая стрелка"/></button>
+				</div>
+				<div className={style.bottomElement2}>
+					<button className={style.addMore}>Добавить еще</button>
+					<button className={style.save}>Сохранить</button>
+				</div>				
+			</div>
+			
 			{/* <div className='container'>
 				<h1>Добавление печатных изданий</h1>
 				<Row gutter={[50, 50]}>
