@@ -1,15 +1,62 @@
 .frame-without-color {
   background-color: white;
   border-radius: 16px;
-  width: 1800px;
+  width: 1824px;
   margin: 22px 48px;
   padding: 50px;
 }
 
+.frame-without-color-2 {
+  background-color: white;
+  border-radius: 16px;
+  width: 1824px;
+  margin: 22px 48px;
+  padding: 16px;
+
+  .export-button{
+    font-size: 16px;
+    padding: 8px 16px;
+    color: #550DB2;
+    border-color: #D8C5F0;
+    transition: border-color 0.3s;
+    cursor: pointer;
+    &:hover {
+      border-color: #550DB2; 
+    }
+  }
+  .delete-button{
+    font-size: 16px;
+    padding: 8px 16px;
+    color: #F44B4B;
+    border-color: #F4C2C2;
+    transition: border-color 0.3s;
+    cursor: pointer;
+    &:hover {
+      border-color: #F44B4B; 
+    }
+  }
+  .edit-button{
+    font-size: 16px; 
+    padding: 8px 16px;
+    color: #6AB20D;
+    border-color: #B8D395;
+    transition: border-color 0.3s;
+    cursor: pointer;
+    &:hover {
+      border-color: #6AB20D;
+      background:#E3EBD7; 
+    }
+  }
+}
+
+// .custom-table{
+//   width: 500px;
+// }
+
 .frame {
   background-color: #ffffff;
   border-radius: 16px;
-  width: 1800px;
+  width: 1824px;
   height: 800px;
   margin: 22px 48px;
   padding: 50px;
@@ -91,4 +138,5 @@
     position: relative;
     width: 592px;
   }
+  
 }
