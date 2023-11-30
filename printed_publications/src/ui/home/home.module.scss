@@ -1,7 +1,34 @@
+.frameWithoutColor {
+  background-color: white;
+  border-radius: 16px;
+  width: 1824px;
+  height: 238px;
+  margin: 22px 48px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  .bigName{
+    color: #000;
+    font-size: 42px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 46px; 
+    margin-bottom: 46px ;
+    margin-top: 32px;
+  }
+
+  .filters{
+    display: flex;
+  }
+}
+
 .search1{
     width: 892px;
     height: 52px;
     flex-shrink: 0;
+    padding: 6px 6px 6px 20px;
     border-radius: 10px;
     border: 1px solid #E6EAF8;
     transition: border-color 0.3s;
@@ -23,6 +50,60 @@
     position: relative;
 }
 
+.date1{
+  width: 442px;
+  height: 52px;
+  padding: 6px 6px 6px 20px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  border: 1px solid #E6EAF8;
+  transition: border-color 0.3s;
+  outline: none;
+  color: #333339;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  margin-right: 8px;
+}
+
+.date1:hover {
+  border-color: #D8C5F0; /* ваш цвет границы при наведении */
+}
+
+.date1:focus {
+  border-color: #550DB2;
+
+  /* цвет границы в активном состоянии (при нажатии) */
+}
+
+.imageWrapper2{
+  display: flex;
+  width: 40px;
+  height: 40px;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  border-radius: 6px;
+  background: #F0EDF5;
+  position: absolute;
+  right: 14px;
+}
+
+.dropDownList{
+  width: 442px;
+  height: 52px ;
+  margin-right: 8px;
+}
+
+ 
+.date{
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
 .imageWrapper{
     display: flex;
     width: 40px;
@@ -36,10 +117,6 @@
     position: absolute;
     right: 6px;
     cursor: pointer;
-     
-    // top: 50%;
-    // right: 10px; /* или другие значения в зависимости от вашего дизайна */
-    // transform: translateY(-50%);
 }
 
 .listActions{
