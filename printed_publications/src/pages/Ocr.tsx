@@ -1,5 +1,4 @@
 // @ts-ignore
-import { Skeleton } from 'antd'
 import React, { useRef, useState } from 'react'
 import { createWorker } from 'tesseract.js'
 import '../Styles/App.css'
@@ -21,40 +20,33 @@ export default () => {
 		setIsLoading(false)
 	}
 
+	const [drag, setDrag] = React.useState(false)
+	const fileInputRef = useRef<HTMLInputElement>(null)
+
+	const dragStartHandler = e => {
+		e.preventDefault()
+		setDrag(true)
+	}
+
+	const dragLeaveHandler = e => {
+		e.preventDefault()
+		setDrag(false)
+	}
+
+	const onDropHandler = e => {
+		e.preventDefault()
+		let files = [...e.dataTransfer.files]
+		doOCR(files[0])
+	}
+
+	const handleChange = function (e) {
+		e.preventDefault()
+		if (e.target.files && e.target.files[0]) {
+			doOCR(e.target.files[0])
+		}
+	}
+
 	const DragDropFile = () => {
-		const [drag, setDrag] = React.useState(false)
-		const fileInputRef = useRef<HTMLInputElement>(null)
-
-		const dragStartHandler = e => {
-			e.preventDefault()
-			setDrag(true)
-		}
-
-		const dragLeaveHandler = e => {
-			e.preventDefault()
-			setDrag(false)
-		}
-
-		const onDropHandler = e => {
-			e.preventDefault()
-			console.log('мы в методе onDropHand')
-			console.log(e)
-			let files = [...e.dataTransfer.files]
-			console.log(files)
-			doOCR(files[0])
-		}
-
-		const handleChange = function (e) {
-			e.preventDefault()
-			if (e.target.files && e.target.files[0]) {
-				doOCR(e.target.files[0])
-			}
-		}
-
-		const showImg = () => {
-			document.createElement('img')
-		}
-
 		return drag ? (
 			<div
 				onDragStart={e => dragStartHandler(e)}
@@ -70,23 +62,25 @@ export default () => {
 				onDragStart={e => dragStartHandler(e)}
 				onDragLeave={e => dragLeaveHandler(e)}
 				onDragOver={e => dragStartHandler(e)}
-				className={style.inputImg}
+				className={style.dropImg}
 				onChange={dragStartHandler}
 			>
-				Перетащите сюда файл или&nbsp;
-				<label
-					htmlFor='filePicker'
-					style={{ color: '#550DB2', cursor: 'pointer' }}
-				>
-					загрузите
-				</label>
-				<input
-					id='filePicker'
-					style={{ visibility: 'hidden' }}
-					type='file'
-					ref={fileInputRef}
-					onChange={handleChange}
-				></input>
+				<div className={style.text}>
+					Перетащите сюда файл или&nbsp;
+					<label
+						htmlFor='filePicker'
+						style={{ color: '#550DB2', cursor: 'pointer' }}
+					>
+						загрузите
+					</label>
+					<input
+						id='filePicker'
+						style={{ visibility: 'hidden' }}
+						type='file'
+						ref={fileInputRef}
+						onChange={handleChange}
+					></input>
+				</div>
 			</div>
 		)
 	}
@@ -155,15 +149,15 @@ export default () => {
 				<div className={style.elements}>
 					<div className={style.containerOcr}>
 						{DragDropFile()}
-						<div className={style.containerElement}>
+						{/* <div className={style.containerElement}>
 							{isLoading ? (
 								<Skeleton loading />
 							) : (
 								ocrText && <p style={{ width: '592px' }}>{ocrText}</p>
 							)}
-						</div>
+						</div> */}
 					</div>
-					{/* <div className={style.propertiesList}>
+					<div className={style.propertiesList}>
 						<div className={style.inputFieldName}>ББК</div>
 						<input
 							className={style.inputField}
@@ -218,7 +212,7 @@ export default () => {
 							name='description'
 							value={fieldValues[8]}
 						></input>
-					</div> */}
+					</div>
 				</div>
 			</div>
 			<div className={style.bottom}>
@@ -242,7 +236,9 @@ export default () => {
 					</button>
 				</div>
 				<div className={style.bottomElement2}>
-					<button className={style.addMore}>Добавить еще</button>
+					<button className={style.addMore} onClick={e => dragLeaveHandler(e)}>
+						Добавить еще
+					</button>
 					<button className={style.save}>Сохранить</button>
 				</div>
 			</div>
