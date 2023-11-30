@@ -8,6 +8,7 @@ const Layout = ({ children }) => {
         <>
             <div className={style.customContainer}>
                 <Link to={'/'}><img src="Logo.svg" alt="Логотип"/></Link>
+                
                 <div className={style.buttons}>
                     <Link to={'/ocr'} style={{marginRight: '8px' }}>
                     <Button
@@ -42,6 +43,7 @@ const Layout = ({ children }) => {
                         Настройки
                         </Button>
                     </Link>
+                    <Link to={'/help'} style={{marginRight: '8px'}}>
                     <Button
                         width='106px'
                         height='43px'
@@ -57,6 +59,7 @@ const Layout = ({ children }) => {
                         fontlineHeight='120%'>
                         Помощь
                     </Button>
+                    </Link>
                     <Link to={'/login'}>
                     <Button
                         width='90px'

@@ -1,0 +1,118 @@
+.inputBox{
+    width: 592px;
+    height: 52px;
+    box-sizing: border-box;
+    border: 1px solid #E6EAF8;
+    border-radius: 10px;
+    margin-bottom: 5px;
+    display: flex;
+    padding: 20px;
+}
+
+.inputBoxName{
+    font-family: 'Inter';
+    font-style:normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    color: #7F7F9B;
+    display: flex;
+    margin-bottom: 8px;
+    margin-top:12px;
+}
+.box {
+    background-color: #ffffff;
+     border-radius: 16px;
+    width: 1824px;
+    height: 800px;
+    margin: 22px 48px;
+    padding: 50px;
+}
+
+.button_confirm{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 16px 38px;
+    gap: 10px;
+    width: 592px;
+    height: 52px;
+    background: #550DB2;
+    border-radius: 10px;
+    /* Inside auto layout */
+    flex: none;
+    order: 2;
+    flex-grow: 0;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    color: #FFFFFF;
+    margin-top: 52px;
+}
+
+.page_name{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 16px 28px;
+    gap: 10px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 36px;
+    color: #000000;
+}
+
+.delete_Button{
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 16px 38px;
+    gap: 10px;
+    position: absolute;
+    width: 220px;
+    height: 52px;
+    left: 1000px;
+    top: -20px;
+
+    background: #F9F9FC;
+    border: 1px solid #E6EAF8;
+    border-radius: 10px;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    /* identical to box height, or 125% */
+
+    color: #000000;
+}
+
+.block{
+    width: 592px;
+    height: 489px;
+    position: relative;
+    left:520px;
+}
+
+.vector{
+    width: 592px;
+    height: 1px;
+    background-color: #E6EAF8;;
+    margin-top: 15px;
+    margin-bottom: 52px;
+}
+
+.closedEye{
+    position:absolute;
+    top:275px;
+    left:550px;
+}
