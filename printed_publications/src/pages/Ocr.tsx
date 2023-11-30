@@ -31,6 +31,7 @@ export default () => {
 	const dragLeaveHandler = e => {
 		e.preventDefault()
 		setDrag(false)
+		addPage()
 	}
 
 	const onDropHandler = e => {
@@ -38,11 +39,13 @@ export default () => {
 		let files = [...e.dataTransfer.files]
 		doOCR(files[0])
 	}
+	const [image, setImage] = useState<string>('')
 
 	const handleChange = function (e) {
 		e.preventDefault()
 		if (e.target.files && e.target.files[0]) {
 			doOCR(e.target.files[0])
+			setImage(URL.createObjectURL(e.target.files[0]))
 		}
 	}
 
@@ -55,7 +58,12 @@ export default () => {
 				onDrop={e => onDropHandler(e)}
 				className={style.dropImg}
 			>
-				<img src='testpng.png' alt='Логотип' height='637px' width='408px' />
+				<img
+					alt='Загружаемое изображение'
+					src={image}
+					height='637px'
+					width='408px'
+				/>
 			</div>
 		) : (
 			<div
@@ -86,7 +94,7 @@ export default () => {
 	}
 
 	const [currentPage, setCurrentPage] = useState(1)
-	const totalPages = 1
+	const [totalPage, setTotalPage] = useState(1)
 	let fieldValues = [
 		'882',
 		'84(2Рос-Рус)6-44',
@@ -106,8 +114,12 @@ export default () => {
 		}
 	}
 
+	const addPage = () => {
+		setTotalPage(totalPage + 1)
+	}
+
 	const goToNextPage = () => {
-		if (currentPage < totalPages) {
+		if (currentPage < totalPage) {
 			setCurrentPage(currentPage + 1)
 			updateInputFields()
 		}
@@ -225,7 +237,7 @@ export default () => {
 						<img src='ArrowLeft.svg' alt='Левая стрелка' />
 					</button>
 					<div className={style.counter}>
-						{currentPage} из {totalPages}
+						{currentPage} из {totalPage}
 					</div>
 					<button
 						className={style.arrowl}
