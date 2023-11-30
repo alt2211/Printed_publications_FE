@@ -1,168 +1,136 @@
-import { Button, Form, Input, notification } from 'antd'
-import FormItem from 'antd/es/form/FormItem'
-import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import '../Styles/login.scss'
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import '../Styles/login.scss';
 
-const Authorization: React.FC = () => {
-	const [page, setPage] = useState<string>('login')
+//Выбор вход или регистрация
+const Authorization = () => {
+  const [page, setPage] = useState('login');
 
-	return (
-		<>
-			<div className='frame'>
-				<div className='div'>
-					<div className='div2'>
-						<div className='div3'>
-							<div
-								className={page === 'login' ? 'divwrapper' : 'divwrapper2'}
-								onClick={() => setPage('login')}
-							>
-								<div
-									className={page === 'login' ? 'textwrapper' : 'textwrapper2'}
-								>
-									Вход
-								</div>
-							</div>
-							<div
-								className={page === 'register' ? 'divwrapper' : 'divwrapper2'}
-								onClick={() => setPage('register')}
-							>
-								<div
-									className={
-										page === 'register' ? 'textwrapper' : 'textwrapper2'
-									}
-								>
-									Регистрация
-								</div>
-							</div>
-						</div>
-						<div className='div4' />
-					</div>
-					{page === 'login' && <LoginPage />}
-					{page === 'register' && <RegPage />}
-					<div>
-						Нажимая «Продолжить», вы принимаете&nbsp;
-						<Link style={{ color: '#A609CB', textDecoration: 'none' }} to={'/'}>
-							пользовательское соглашение
-						</Link>
-						&nbsp;и&nbsp;
-						<Link style={{ color: '#A609CB', textDecoration: 'none' }} to={'/'}>
-							политику конфиденциальности
-						</Link>
-						.
-					</div>
-				</div>
+  return (
+    <>
+      <div className='frame'>
+        <div className='div'>
+          <div className='div2'>
+            <div className='div3'>
+              <div
+                className={page === 'login' ? 'divwrapper' : 'divwrapper2'}
+                onClick={() => setPage('login')} >
+                <div className={page === 'login' ? 'textwrapper' : 'textwrapper2'}>
+                  Вход
+                </div>
+              </div>
+              <div
+                className={page === 'register' ? 'divwrapper' : 'divwrapper2'}
+                onClick={() => setPage('register')} >
+                <div
+                  className={page === 'register' ? 'textwrapper' : 'textwrapper2'}>
+                  Регистрация
+                </div>
+              </div>
+            </div>
+            <div className='div4'/>
+          </div>
+          {page === 'login' && <LoginPage />}
+          {page === 'register' && <RegPage />}
+          <div className='policy'>
+			<div className='policy3'>
+			Нажимая&nbsp;«Продолжить», вы принимаете&nbsp;<div className='policy2' style={{width: '245px'}}>пользовательское соглашение</div>&nbsp;и
 			</div>
-		</>
-	)
-}
+            <div className='policy3'><div className='policy2'>политику конфиденциальности</div>.</div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
 
+//Страница входа
 const LoginPage = () => {
-	const navigate = useNavigate()
+  const navigate = useNavigate();
 
-	const onFinish = ({ email, password }) => {
-		if (email === 'dmitryt19@gmail.com' && password === '123456789') {
-			navigate('/')
-		} else {
-			notification.error({
-				message: 'Неправильный логин или пароль',
-				key: 'incorrectLogin',
-			})
-		}
-	}
+  const onFinish = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const email = formData.get('email');
+    const password = formData.get('password');
 
-	return (
-		<Form
-			layout='vertical'
-			style={{ width: '100%' }}
-			size='large'
-			onFinish={onFinish}
-		>
-			<FormItem name='email' label='Электронная почта'>
-				<Input
-					type='email'
-					size='large'
-					style={{ width: '100%', boxShadow: 'none'}}
-					placeholder='youremail@gmail.com'
-				/>
-			</FormItem> 
-			<FormItem name='password' label='Пароль'>
-				<Input.Password
-					size='large'
-					style={{ width: '100%', boxShadow: 'none' }}
-					placeholder='•••••••••'
-				/>
-			</FormItem>
-			<div
-				style={{
-					color: '#550DB2',
-					fontSize: 18,
-					textAlign: 'left',
-					width: '100%',
-				}}
-			>
-				Забыли пароль?
-			</div>
-			<br />
-			<Button
-				style={{
-					backgroundColor: '#550DB2',
-					color: 'white',
-				}}
-				size='large'
-				block
-				htmlType='submit'
-			>
-				Продолжить
-			</Button>
-		</Form>
-	)
-}
+    if (email === '1@g' && password === '1') {
+      navigate('/');
+    } else {
+      alert('Неправильный логин или пароль');
+    }
+  };
 
+  return (
+    <form onSubmit={onFinish}>
+      <label className='text'>
+          Электронная почта
+        <input
+          name='email'
+          type='email'
+          placeholder='Введите адрес почты'
+		  className='inputF'
+        />
+      </label>
+      <label className='text'>
+          Пароль
+        <input
+          name='password'
+          type='password'
+          placeholder='Введите пароль'
+		  className='inputF'
+        />
+      </label> 
+      <div style={{ color: '#A609CB', textAlign: 'left',marginTop: '4px'}}>Забыли пароль?</div>
+      <button className='next'>Продолжить</button>
+    </form>
+  );
+};
+
+//Страница регистрации
 const RegPage = () => {
-	const onFinish = ({ email, password, repeatPassword }) => {
-		notification.error({
-			message: 'Пользователь с такой почтой уже зарегистиррован',
-			key: 'incorrectLogin',
-		})
-	}
+  const onFinish = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const email = formData.get('email');
+    const password = formData.get('password');
+    const repeatPassword = formData.get('repeatPassword');
+  };
 
-	return (
-		<Form layout='vertical' style={{ width: '100%' }} size='large'>
-			<FormItem name='email' label='Электронная почта'>
-				<Input
-					type='email'
-					size='large'
-					style={{ width: '100%', boxShadow: 'none' }}
-					placeholder='youremail@gmail.com'
-				/>
-			</FormItem>
-			<FormItem name='password' label='Пароль'>
-				<Input.Password
-					size='large'
-					style={{ width: '100%', boxShadow: 'none' }}
-					placeholder='•••••••••'
-				/>
-			</FormItem>
-			<FormItem name='repeatPassword' label='Повторите пароль'>
-				<Input.Password
-					size='large'
-					style={{ width: '100%', boxShadow: 'none' }}
-					placeholder='•••••••••'
-				/>
-			</FormItem>
-			<Button
-				style={{
-					backgroundColor: '#550DB2',
-					color: 'white',
-				}}
-				size='large'
-				block
-			>
-				Продолжить
-			</Button>
-		</Form>
-	)
-}
+  return (
+    <form onSubmit={onFinish}>
+      <label className='text'>
+        Электронная почта
+        <input
+          name='email'
+          type='email'
+          placeholder='Введите адрес почты'
+		  className='inputF'
+        />
+      </label>
+      <label className='text'>
+        Пароль
+        <input
+          name='password'
+          type='password'
+          placeholder='Введите пароль'
+		  className='inputF'
+        />
+      </label>
+      <label className='text'>
+        Подтвердите пароль
+        <input
+          name='repeatPassword'
+          type='password'
+          placeholder='Введите пароль'
+		  className='inputF'
+        />
+      </label>
+      <button className='next'>
+        Продолжить
+      </button>
+    </form>
+  );
+};
 
-export default Authorization
+export default Authorization;
