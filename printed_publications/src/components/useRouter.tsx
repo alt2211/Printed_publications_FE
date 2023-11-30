@@ -5,6 +5,7 @@ import Ocr from "../pages/Ocr.tsx";
 import Login from "../pages/Login.tsx";
 import Home from "../pages/Home.tsx";
 import Settings from "../pages/Settings.tsx";
+import Help from "../pages/Help.tsx";
 
 interface Page {
     element: ReactNode,
@@ -18,6 +19,7 @@ export default () => {
         { element: <Home/>, path: '/' },
         { element: <Navigate to='/login'/>, path: '*' },
         { element: <Settings/>, path: '/settings'},
+        { element: <Help/>, path: '/help'}
     ]
 
     return (
