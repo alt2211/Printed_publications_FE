@@ -93,43 +93,54 @@ export default () => {
 		)
 	}
 
+	// fieldValues = [
+	// 	'882',
+	// 	'84(2Рос-Рус)6-44',
+	// 	'Горшков В. С.',
+	// 	'АСТ-ПРЕСС',
+	// 	'2001',
+	// 	'5-7805-0685-Х',
+	// 	'Москва',
+	// 	'-',
+	// 	'',
+	// ]
+
 	const [currentPage, setCurrentPage] = useState(1)
 	const [totalPage, setTotalPage] = useState(1)
-	let fieldValues = [
-		'882',
-		'84(2Рос-Рус)6-44',
-		'Горшков В. С.',
-		'АСТ-ПРЕСС',
-		'2001',
-		'5-7805-0685-Х',
-		'Москва',
-		'-',
-		'',
-	]
-	let fieldValuesTEST = ['1', '2', '3', '4', '5', '6', '8', '9', '10']
+	const [fieldValues, setFieldValues] = useState(Array(9).fill('-'))
+
 	const goToPreviousPage = () => {
 		if (currentPage > 1) {
-			setCurrentPage(currentPage - 1)
-			updateInputFields()
+			// setCurrentPage((currentPage) => currentPage - 1)
+			// setFieldValues([`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`])
+			setCurrentPage((currentPage) => {
+				const newPage = currentPage - 1;
+				setFieldValues(Array(9).fill(`${newPage}`));
+				return newPage;
+			  });
 		}
 	}
 
 	const addPage = () => {
-		setTotalPage(totalPage + 1)
+		setTotalPage((totalPage) => totalPage + 1)
 	}
 
 	const goToNextPage = () => {
 		if (currentPage < totalPage) {
-			setCurrentPage(currentPage + 1)
-			updateInputFields()
+			// setCurrentPage((currentPage) => currentPage + 1)
+			// setFieldValues([`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`])
+			setCurrentPage((currentPage) => {
+				const newPage = currentPage + 1;
+				setFieldValues(Array(9).fill(`${newPage}`));
+				return newPage;
+			  });
 		}
 	}
 	const updateInputFields = () => {
 		// Logic to fetch data for the current page and update input fields
 		// For example, if you have an array of data for each page
 
-		// const currentPageData = getPageData(currentPage); // Implement this function
-		const currentPageData = fieldValuesTEST[currentPage]
+		//const currentPageData = getPageData(currentPage); // Implement this function
 
 		// Update input fields using the data for the current page
 		// Assuming your input fields are controlled inputs, update their values
@@ -142,16 +153,16 @@ export default () => {
 		// fieldValues[6] = currentPageData.year,
 		// fieldValues[7] = currentPageData.type,
 		// fieldValues[8] = currentPageData.description
-
-		fieldValues[0] = currentPageData
-		fieldValues[1] = currentPageData
-		fieldValues[2] = currentPageData
-		fieldValues[3] = currentPageData
-		fieldValues[4] = currentPageData
-		fieldValues[5] = currentPageData
-		fieldValues[6] = currentPageData
-		fieldValues[7] = currentPageData
-		fieldValues[8] = currentPageData
+		setFieldValues([`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`])
+		// fieldValues[0] = `${currentPage}`
+		// fieldValues[1] = `${currentPage}`
+		// fieldValues[2] = `${currentPage}`
+		// fieldValues[3] = currentPageData
+		// fieldValues[4] = currentPageData
+		// fieldValues[5] = currentPageData
+		// fieldValues[6] = currentPageData
+		// fieldValues[7] = currentPageData
+		// fieldValues[8] = currentPageData
 	}
 
 	return (
