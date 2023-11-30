@@ -1,10 +1,13 @@
-import { Button, Col, DatePicker, Row, Select, Table, Tag, Typography } from "antd";
+import { Button, Select, Table, Tag} from "antd";
 import {
     EditOutlined,
     DeleteOutlined,
     DownloadOutlined,
 } from '@ant-design/icons';
 import style from '../ui/home/home.module.scss'
+import '../ui/dropdownlist/dropdownlist.tsx'
+import React, { useState } from "react"
+import DropdownList from "../ui/dropdownlist/dropdownlist.tsx";
 
 export default () => {
 
@@ -21,52 +24,35 @@ export default () => {
         { title: 'Тип издания', dataIndex: 'type' },
     ]
 
+
+
     return (
         <>
-            <div className='frame-without-color'>
-                <Typography.Title level={1} style={{marginTop: '0px'}}>Список печатный изданий</Typography.Title>
-                <Row gutter={[10, 0]}>
-                    <Col span={12}>
-                        <DatePicker.RangePicker
-                            size='large'
-                            style={{ width: '100%', boxShadow: 'none'}}
-                        />
-                    </Col>
-                    <Col span={6}>
-                        <Select
-                            size='large'
-                            style={{ width: '100%'}}
-                            options={[
-                                { label: 'Пушкин 1', value: '1' },
-                                { label: 'Пушкин 2', value: '2' },
-                                { label: 'Пушкин 3', value: '3' },
-                            ]}
-                            placeholder='Выберите автора'
-                        />
-                    </Col>
-                    <Col span={6}> 
-                        <Button
-                            style={{
-                                backgroundColor: '#550DB2',
-                                color: 'white',
-                            }}
-                            size='large'
-                            block
-                        >
-                            Применить
-                        </Button>
-                    </Col>
-                </Row>
+            <div className={style.frameWithoutColor}>
+                <div className={style.bigName}>Список печатный изданий</div>
+                <div className={style.filters}>
+                    <div className={style.date}>
+                        <input type="text" className={style.date1} placeholder='Дата начала'/>
+                        <div className={style.imageWrapper2}>
+                            <img src="CalendarCheck.svg" alt="MagnifyingGlass" />
+                        </div>
+                    </div> 
+                    <div className={style.date}>
+                        <input type="text"className={style.date1} placeholder='Дата конца' /> 
+                        <div className={style.imageWrapper2}>
+                            <img src="CalendarCheck.svg" alt="MagnifyingGlass" />
+                        </div>
+                    </div> 
+                    <div className={style.dropDownList}>
+                        <DropdownList/>
+                    </div>
+                    <Button style={{backgroundColor: '#550DB2', color: 'white', width: '142px'}} size='large' block>
+                        Применить
+                    </Button>
+                </div>
             </div>
 
             <div className={style.frc}>
-                {/* Старые стили у кнопок */}
-                {/* <Tag color='#EAF3DE' icon={<EditOutlined/>} 
-                     style={{ fontSize: 16, padding: '8px 16px' , color: '#6AB20D', borderColor: '#B8D395'}}>Редактировать</Tag>
-                <Tag color='#FEE' icon={<DeleteOutlined/>} 
-                     style={{ fontSize: 16, padding: '8px 16px' , color: '#F44B4B', borderColor: '#F4C2C2'}}>Удалить</Tag>
-                <Tag color='#F0EDF5' icon={<DownloadOutlined/>}
-                     style={{ fontSize: 16, padding: '8px 16px', color: '#550DB2', borderColor: '#D8C5F0' }}>Экспорт</Tag> */}
                 <div className={style.listActions}>
                     <div className={style.Text1}>Действия со списком</div>
                     <Tag color='#EAF3DE' icon={<EditOutlined/>} className={style.editButton}>Редактировать</Tag>
@@ -89,4 +75,5 @@ export default () => {
             </div>
         </>
     )
+    
 }
