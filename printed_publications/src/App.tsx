@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes } from 'react-router-dom';
 import useRouter from "./components/useRouter.tsx";
 import { ConfigProvider } from "antd";
+import React from 'react';
 import './Styles/App.css'
 
 export default () => {
@@ -9,6 +10,16 @@ export default () => {
     return (
         <ConfigProvider
             theme={{
+                token: {
+                    colorBorder: '#E6EAF8',
+                    colorBgContainer: '#FFF',
+                    borderRadius: 10,
+                    colorPrimaryHover: '#D8C5F0',
+                    colorPrimary: "#550DB2",
+                    colorPrimaryBorder: "#FFF",
+                    colorBorderSecondary: "#FFF",
+
+                  },
                 components: {
                     Form: {
                         labelFontSize: 16,
@@ -23,7 +34,8 @@ export default () => {
                         controlHeightLG: 52
                     },
                     Select: {
-                        controlHeightLG: 52
+                        controlHeightLG: 52,
+                        boxShadow: 'none'
                     },
                 }
             }}
@@ -36,3 +48,4 @@ export default () => {
         </ConfigProvider>
     )
 }
+
