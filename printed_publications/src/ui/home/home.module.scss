@@ -1,0 +1,121 @@
+.search1{
+    width: 892px;
+    height: 52px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    border: 1px solid #E6EAF8;
+    transition: border-color 0.3s;
+    outline: none;
+}
+
+.search1:hover {
+    border-color: #D8C5F0; /* ваш цвет границы при наведении */
+  }
+
+.search1:focus {
+    border-color: #550DB2;
+
+    /* цвет границы в активном состоянии (при нажатии) */
+  }
+.search{
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.imageWrapper{
+    display: flex;
+    width: 40px;
+    height: 40px;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    border-radius: 6px;
+    background: #F0EDF5;
+    position: absolute;
+    right: 6px;
+    cursor: pointer;
+     
+    // top: 50%;
+    // right: 10px; /* или другие значения в зависимости от вашего дизайна */
+    // transform: translateY(-50%);
+}
+
+.listActions{
+    display: flex;
+    width: 892px;
+    height: 52px;
+    padding: 8px 8px 8px 20px;
+    align-items: center;
+    flex-shrink: 0;
+    border-radius: 10px;
+    border: 1px solid #E6EAF8;
+    background: #F9F9FC;
+    margin-right: 8px;
+}
+
+.Text1{
+    width: 175px;
+    color: #333339;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    margin-right: 246px;
+
+}
+
+
+
+.frc {
+    background-color: white;
+    border-radius: 16px;
+    width: 1824px;
+    margin: 22px 48px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+
+    .exportButton{
+        width: 127px;
+        font-size: 16px;
+        padding: 8px 16px;
+        color: #550DB2;
+        border-color: #D8C5F0;
+        transition: border-color 0.3s;
+        border-radius: 6px;
+        cursor: pointer;
+        &:hover {
+          border-color: #550DB2; 
+        }
+        margin-right: 0px;
+      }
+      .deleteButton{
+        width: 125px;
+        font-size: 16px;
+        padding: 8px 16px;
+        color: #F44B4B;
+        border-color: #F4C2C2;
+        transition: border-color 0.3s;
+        border-radius: 6px;
+        cursor: pointer;
+        &:hover {
+          border-color: #F44B4B; 
+        }
+      }
+      .editButton{
+        width: 180px;
+        font-size: 16px; 
+        padding: 8px 16px;
+        color: #6AB20D;
+        border-color: #B8D395;
+        transition: border-color 0.3s;
+        border-radius: 6px;
+        cursor: pointer;
+        &:hover {
+          border-color: #6AB20D;
+          background:#E3EBD7; 
+        }
+      }
+}

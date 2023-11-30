@@ -4,6 +4,7 @@ import {
     DeleteOutlined,
     DownloadOutlined,
 } from '@ant-design/icons';
+import style from '../ui/home/home.module.scss'
 
 export default () => {
 
@@ -28,22 +29,22 @@ export default () => {
                     <Col span={12}>
                         <DatePicker.RangePicker
                             size='large'
-                            style={{ width: '100%' }}
+                            style={{ width: '100%', boxShadow: 'none'}}
                         />
                     </Col>
                     <Col span={6}>
                         <Select
                             size='large'
-                            style={{ width: '100%' }}
+                            style={{ width: '100%'}}
                             options={[
-                                { label: 'Петрович 1', value: '1' },
-                                { label: 'Петрович 2', value: '2' },
-                                { label: 'Петрович 3', value: '3' },
+                                { label: 'Пушкин 1', value: '1' },
+                                { label: 'Пушкин 2', value: '2' },
+                                { label: 'Пушкин 3', value: '3' },
                             ]}
                             placeholder='Выберите автора'
                         />
                     </Col>
-                    <Col span={6}>
+                    <Col span={6}> 
                         <Button
                             style={{
                                 backgroundColor: '#550DB2',
@@ -58,7 +59,7 @@ export default () => {
                 </Row>
             </div>
 
-            <div className='frame-without-color-2'>
+            <div className={style.frc}>
                 {/* Старые стили у кнопок */}
                 {/* <Tag color='#EAF3DE' icon={<EditOutlined/>} 
                      style={{ fontSize: 16, padding: '8px 16px' , color: '#6AB20D', borderColor: '#B8D395'}}>Редактировать</Tag>
@@ -66,11 +67,18 @@ export default () => {
                      style={{ fontSize: 16, padding: '8px 16px' , color: '#F44B4B', borderColor: '#F4C2C2'}}>Удалить</Tag>
                 <Tag color='#F0EDF5' icon={<DownloadOutlined/>}
                      style={{ fontSize: 16, padding: '8px 16px', color: '#550DB2', borderColor: '#D8C5F0' }}>Экспорт</Tag> */}
-
-                <Tag color='#EAF3DE' icon={<EditOutlined/>} className='edit-button'>Редактировать</Tag>
-                <Tag color='#FEE' icon={<DeleteOutlined/>} className='delete-button'>Удалить</Tag>
-                <Tag color='#F0EDF5' icon={<DownloadOutlined/>} className='export-button'>Экспорт</Tag>
-
+                <div className={style.listActions}>
+                    <div className={style.Text1}>Действия со списком</div>
+                    <Tag color='#EAF3DE' icon={<EditOutlined/>} className={style.editButton}>Редактировать</Tag>
+                    <Tag color='#FEE' icon={<DeleteOutlined/>} className={style.deleteButton}>Удалить</Tag>
+                    <Tag color='#F0EDF5' icon={<DownloadOutlined/>} className={style.exportButton} >Экспорт</Tag>
+                </div>
+                <div className={style.search}>
+                <input type="text"className={style.search1} /> {/* Ваше поле ввода */}
+                    <div className={style.imageWrapper}>
+                        <img src="MagnifyingGlass.svg" alt="MagnifyingGlass" />
+                    </div>
+                </div>
             </div>
 
             <div className='frame-without-color-2'>

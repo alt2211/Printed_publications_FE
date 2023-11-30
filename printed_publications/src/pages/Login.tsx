@@ -82,14 +82,14 @@ const LoginPage = () => {
 				<Input
 					type='email'
 					size='large'
-					style={{ width: '100%' }}
+					style={{ width: '100%', boxShadow: 'none'}}
 					placeholder='youremail@gmail.com'
 				/>
-			</FormItem>
+			</FormItem> 
 			<FormItem name='password' label='Пароль'>
 				<Input.Password
 					size='large'
-					style={{ width: '100%' }}
+					style={{ width: '100%', boxShadow: 'none' }}
 					placeholder='•••••••••'
 				/>
 			</FormItem>
@@ -133,21 +133,21 @@ const RegPage = () => {
 				<Input
 					type='email'
 					size='large'
-					style={{ width: '100%' }}
+					style={{ width: '100%', boxShadow: 'none' }}
 					placeholder='youremail@gmail.com'
 				/>
 			</FormItem>
 			<FormItem name='password' label='Пароль'>
 				<Input.Password
 					size='large'
-					style={{ width: '100%' }}
+					style={{ width: '100%', boxShadow: 'none' }}
 					placeholder='•••••••••'
 				/>
 			</FormItem>
 			<FormItem name='repeatPassword' label='Повторите пароль'>
 				<Input.Password
 					size='large'
-					style={{ width: '100%' }}
+					style={{ width: '100%', boxShadow: 'none' }}
 					placeholder='•••••••••'
 				/>
 			</FormItem>
