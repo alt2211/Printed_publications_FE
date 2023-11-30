@@ -3,6 +3,7 @@ import React, { useRef, useState } from 'react'
 import { createWorker } from 'tesseract.js'
 import '../Styles/App.css'
 import style from '../ui/ocr/ocr.module.scss'
+import Parser from '../ui/ocr/parser.ts'
 
 export default () => {
 	const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -12,9 +13,10 @@ export default () => {
 		setOcrText('')
 		setIsLoading(true)
 
-		const worker = await createWorker('rus')
+		const worker = await createWorker('rus', undefined, {
+			logger: m => console.log(m.progress * 100),
+		})
 
-		console.log(file)
 		const { data } = await worker.recognize(file)
 		setOcrText(data.text)
 		setIsLoading(false)
@@ -22,6 +24,7 @@ export default () => {
 
 	const [drag, setDrag] = React.useState(false)
 	const fileInputRef = useRef<HTMLInputElement>(null)
+	const [image, setImage] = useState<string>('')
 
 	const dragStartHandler = e => {
 		e.preventDefault()
@@ -39,7 +42,6 @@ export default () => {
 		let files = [...e.dataTransfer.files]
 		doOCR(files[0])
 	}
-	const [image, setImage] = useState<string>('')
 
 	const handleChange = function (e) {
 		e.preventDefault()
@@ -161,13 +163,7 @@ export default () => {
 				<div className={style.elements}>
 					<div className={style.containerOcr}>
 						{DragDropFile()}
-						{/* <div className={style.containerElement}>
-							{isLoading ? (
-								<Skeleton loading />
-							) : (
-								ocrText && <p style={{ width: '592px' }}>{ocrText}</p>
-							)}
-						</div> */}
+						{Parser(ocrText.split(' '))}
 					</div>
 					<div className={style.propertiesList}>
 						<div className={style.inputFieldName}>ББК</div>
