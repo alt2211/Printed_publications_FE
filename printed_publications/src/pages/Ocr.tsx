@@ -3,7 +3,7 @@ import React, { useRef, useState } from 'react'
 import { createWorker } from 'tesseract.js'
 import '../Styles/App.css'
 import style from '../ui/ocr/ocr.module.scss'
-import Parser from '../ui/ocr/parser.ts'
+import parseTextByRegex from '../ui/ocr/parser.ts'
 
 export default () => {
 	const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -115,27 +115,27 @@ export default () => {
 		if (currentPage > 1) {
 			// setCurrentPage((currentPage) => currentPage - 1)
 			// setFieldValues([`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`])
-			setCurrentPage((currentPage) => {
-				const newPage = currentPage - 1;
-				setFieldValues(Array(9).fill(`${newPage}`));
-				return newPage;
-			  });
+			setCurrentPage(currentPage => {
+				const newPage = currentPage - 1
+				setFieldValues(Array(9).fill(`${newPage}`))
+				return newPage
+			})
 		}
 	}
 
 	const addPage = () => {
-		setTotalPage((totalPage) => totalPage + 1)
+		setTotalPage(totalPage => totalPage + 1)
 	}
 
 	const goToNextPage = () => {
 		if (currentPage < totalPage) {
 			// setCurrentPage((currentPage) => currentPage + 1)
 			// setFieldValues([`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`])
-			setCurrentPage((currentPage) => {
-				const newPage = currentPage + 1;
-				setFieldValues(Array(9).fill(`${newPage}`));
-				return newPage;
-			  });
+			setCurrentPage(currentPage => {
+				const newPage = currentPage + 1
+				setFieldValues(Array(9).fill(`${newPage}`))
+				return newPage
+			})
 		}
 	}
 	const updateInputFields = () => {
@@ -155,7 +155,17 @@ export default () => {
 		// fieldValues[6] = currentPageData.year,
 		// fieldValues[7] = currentPageData.type,
 		// fieldValues[8] = currentPageData.description
-		setFieldValues([`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`])
+		setFieldValues([
+			`${currentPage}`,
+			`${currentPage}`,
+			`${currentPage}`,
+			`${currentPage}`,
+			`${currentPage}`,
+			`${currentPage}`,
+			`${currentPage}`,
+			`${currentPage}`,
+			`${currentPage}`,
+		])
 		// fieldValues[0] = `${currentPage}`
 		// fieldValues[1] = `${currentPage}`
 		// fieldValues[2] = `${currentPage}`
@@ -174,7 +184,7 @@ export default () => {
 				<div className={style.elements}>
 					<div className={style.containerOcr}>
 						{DragDropFile()}
-						{Parser(ocrText.split(' '))}
+						{parseTextByRegex()}
 					</div>
 					<div className={style.propertiesList}>
 						<div className={style.inputFieldName}>ББК</div>
