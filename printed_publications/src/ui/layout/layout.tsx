@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { ReactNode, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import style from './layout.module.scss'
+import { MainContext } from '../../MainContext.ts'
 
-const Layout = ({ children }) => {
+const Layout: React.FC<{ children: ReactNode}> = ({ children }) => {
+	const { user, logout} = useContext(MainContext)
+
 	return (
 		<>
 			<div className={style.customContainer}>
@@ -11,6 +14,7 @@ const Layout = ({ children }) => {
 						<img src='Logo.svg' alt='Логотип' />
 					</Link>
 				</div>
+				{user.username &&
 				<div className={style.buttons}>
 					<Link to={'/ocr'}>
 						<button className={style.buttonAdd}>Добавить</button>
@@ -25,6 +29,7 @@ const Layout = ({ children }) => {
 						<button className={style.buttonExit}>Выйти</button>
 					</Link>
 				</div>
+			}
 			</div>
 			<main>{children}</main>
 		</>
