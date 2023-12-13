@@ -26,7 +26,7 @@ const Layout: React.FC<{ children: ReactNode}> = ({ children }) => {
 						<button className={style.buttonHelp}>Помощь</button>
 					</Link>
 					<Link to={'/login'}>
-						<button className={style.buttonExit}>Выйти</button>
+						<button className={style.buttonExit} onClick={logout}>Выйти</button>
 					</Link>
 				</div>
 			}

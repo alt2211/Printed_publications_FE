@@ -70,6 +70,7 @@ const LoginPage = () => {
       // Отправка запроса на сервер для входа
       const handleLogin = async () => {
         try {
+          //Переделать через env
           const response = await fetch('http://localhost:5000/auth/login', {
             method: 'POST',
             headers: {
@@ -80,7 +81,8 @@ const LoginPage = () => {
               password: password,
             }),
           });
-          const loggedUser = {username: `${email}`, password: `${password}`};
+          //ИСПРАВИТЬ!!!
+          const loggedUser = {id: 1, username: `${email}`, password: `${password}`};
           setUser(loggedUser)
           // const data = await response.json();
           // console.log(data);
