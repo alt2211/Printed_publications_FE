@@ -3,7 +3,6 @@ import React, { useRef, useState } from 'react'
 import { createWorker } from 'tesseract.js'
 import '../Styles/App.css'
 import style from '../ui/ocr/ocr.module.scss'
-import parseTextByRegex from '../ui/ocr/parser.ts'
 
 export default () => {
 	const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -182,10 +181,7 @@ export default () => {
 			<div className={style.container}>
 				<h1 style={{ marginBottom: '52px' }}>Добавление печатных изданий</h1>
 				<div className={style.elements}>
-					<div className={style.containerOcr}>
-						{DragDropFile()}
-						{parseTextByRegex()}
-					</div>
+					<div className={style.containerOcr}>{DragDropFile()}</div>
 					<div className={style.propertiesList}>
 						<div className={style.inputFieldName}>ББК</div>
 						<input
