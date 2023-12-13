@@ -3,7 +3,7 @@ import React, { useRef, useState } from 'react'
 import { createWorker } from 'tesseract.js'
 import '../Styles/App.css'
 import style from '../ui/ocr/ocr.module.scss'
-import Parser from '../ui/ocr/parser.ts'
+import parseTextByRegex from '../ui/ocr/parser.ts'
 
 export default () => {
 	const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -144,7 +144,7 @@ export default () => {
 	}
 
 	const addPage = () => {
-		setTotalPage((totalPage) => totalPage + 1)
+		setTotalPage(totalPage => totalPage + 1)
 	}
 
 	const goToNextPage = () => {
@@ -167,6 +167,7 @@ export default () => {
 
 		// Update input fields using the data for the current page
 		// Assuming your input fields are controlled inputs, update their values
+
 		setBBK(myArray[currentPage-1])
 	}
 
@@ -177,7 +178,7 @@ export default () => {
 				<div className={style.elements}>
 					<div className={style.containerOcr}>
 						{DragDropFile()}
-						{Parser(ocrText.split(' '))}
+						{parseTextByRegex()}
 					</div>
 					<div className={style.propertiesList}>
 						<div className={style.inputFieldName}>ББК</div>
