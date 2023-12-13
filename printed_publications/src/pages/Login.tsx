@@ -54,11 +54,36 @@ const LoginPage = () => {
     const email = formData.get('email');
     const password = formData.get('password');
 
-    if (email === '1@g' && password === '1') {
-      navigate('/');
-    } else {
-      alert('Неправильный логин или пароль');
-    }
+    // if (email === '1@g' && password === '1') {
+    //   navigate('/');
+    // } else {
+    //   alert('Неправильный логин или пароль');
+    // }
+      // Отправка запроса на сервер для входа
+      const handleLogin = async () => {
+        try {
+          const response = await fetch('http://localhost:5000/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              username: email,
+              password: password,
+            }),
+          });
+      
+          const data = await response.json();
+          console.log(data);
+      
+          const { token } = data;
+          localStorage.setItem('token', token);
+          console.log(localStorage.getItem('token'));
+        } catch (error) {
+          console.error('Ошибка:', error);
+        }
+      };
+    handleLogin();
   };
 
   return (
@@ -95,6 +120,26 @@ const RegPage = () => {
     const email = formData.get('email');
     const password = formData.get('password');
     const repeatPassword = formData.get('repeatPassword');
+    const handleRegister = async () => {
+      const response = await fetch('http://localhost:5000/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          username: email,
+          password: password,
+
+         }),
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        //Обработка ответа от сервера
+      })
+      .catch(error => console.error('Ошибка:', error));
+    };
+    handleRegister();
   };
 
   return (
