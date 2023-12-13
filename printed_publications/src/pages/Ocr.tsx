@@ -88,23 +88,13 @@ export default () => {
 						type='file'
 						ref={fileInputRef}
 						onChange={handleChange}
+						multiple
 					></input>
 				</div>
+				{/* {parseTextByRegex()} */}
 			</div>
 		)
 	}
-
-	// fieldValues = [
-	// 	'882',
-	// 	'84(2Рос-Рус)6-44',
-	// 	'Горшков В. С.',
-	// 	'АСТ-ПРЕСС',
-	// 	'2001',
-	// 	'5-7805-0685-Х',
-	// 	'Москва',
-	// 	'-',
-	// 	'',
-	// ]
 
 	const [currentPage, setCurrentPage] = useState(1)
 	const [totalPage, setTotalPage] = useState(1)
@@ -119,26 +109,25 @@ export default () => {
 	const [Type, setType] = useState('-')
 	const [Description, setDescription] = useState('-')
 
-	const myArray = ['371821','293738','392817']
+	//const myArray = ['371821', '293738', '392817']
 
-	const xaos = (e:React.ChangeEvent<HTMLInputElement>, name: string) => {
+	const xaos = (e: React.ChangeEvent<HTMLInputElement>, name: string) => {
 		const input = e.target.value
-		if (name === "BBK" ){
+		if (name === 'BBK') {
 			setBBK(input)
 		}
-
 	}
 
 	const goToPreviousPage = () => {
 		if (currentPage > 1) {
 			// setCurrentPage((currentPage) => currentPage - 1)
 			// setFieldValues([`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`])
-			setCurrentPage((currentPage) => {
-				const newPage = currentPage - 1;
+			setCurrentPage(currentPage => {
+				const newPage = currentPage - 1
 				// setFieldValues(Array(9).fill(`${newPage}`));
 				updateInputFields()
-				return newPage;
-			  });
+				return newPage
+			})
 		}
 	}
 
@@ -150,25 +139,70 @@ export default () => {
 		if (currentPage < totalPage) {
 			// setCurrentPage((currentPage) => currentPage + 1)
 			// setFieldValues([`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`])
-			setCurrentPage((currentPage) => {
-				const newPage = currentPage + 1;
+			setCurrentPage(currentPage => {
+				const newPage = currentPage + 1
 				// setFieldValues(Array(9).fill(`${newPage}`));
 				updateInputFields()
-				return newPage;
-			  });
+				return newPage
+			})
 		}
 	}
 	const updateInputFields = () => {
 		// Logic to fetch data for the current page and update input fields
 		// For example, if you have an array of data for each page
-
 		//const currentPageData = getPageData(currentPage); // Implement this function
-
 		// Update input fields using the data for the current page
 		// Assuming your input fields are controlled inputs, update their values
-
-		setBBK(myArray[currentPage-1])
+		//setBBK(myArray[currentPage - 1])
 	}
+
+	const inputInfo = [
+		{
+			title: 'ББК',
+			name: 'BBK',
+			value: BBK,
+		},
+		{
+			title: 'УДК',
+			name: 'UDK',
+			value: YDK,
+		},
+		{
+			title: 'Автор',
+			name: 'autor',
+			value: Author,
+		},
+		{
+			title: 'Название издания',
+			name: 'title_publication',
+			value: PublicationTitle,
+		},
+		{
+			title: 'Год публикации',
+			name: 'year_publication',
+			value: Year,
+		},
+		{
+			title: 'ISBN',
+			name: 'ISBN',
+			value: ISBN,
+		},
+		{
+			title: 'Город издания',
+			name: 'city_publication',
+			value: City,
+		},
+		{
+			title: 'Тип издания',
+			name: 'type_publication',
+			value: Type,
+		},
+		{
+			title: 'Описание',
+			name: 'description',
+			value: Description,
+		},
+	]
 
 	return (
 		<>
@@ -177,69 +211,19 @@ export default () => {
 				<div className={style.elements}>
 					<div className={style.containerOcr}>{DragDropFile()}</div>
 					<div className={style.propertiesList}>
-						<div className={style.inputFieldName}>ББК</div>
-						<input
-							className={style.inputField}
-							name='BBK'
-							value={BBK}
-							onChange={(e) => xaos(e, "BBK")}
-						/>
-						<div className={style.inputFieldName}>УДК</div>
-						<input
-							className={style.inputField}
-							name='YDK'
-							value={BBK}
-							onChange={(e) => xaos(e, "BBK")}
-						></input>
-						<div className={style.inputFieldName}>Автор</div>
-						<input
-							className={style.inputField}
-							name='author'
-							value={BBK}
-							onChange={(e) => xaos(e, "BBK")}
-						></input>
-						<div className={style.inputFieldName}>Название издания</div>
-						<input
-							className={style.inputField}
-							name='publicationTitle'
-							value={BBK}
-							onChange={(e) => xaos(e, "BBK")}
-						></input>
-						<div className={style.inputFieldName}>Год публикации</div>
-						<input
-							className={style.inputField}
-							name='publicationDate'
-							value={BBK}
-							onChange={(e) => xaos(e, "BBK")}
-						></input>
-						<div className={style.inputFieldName}>ISBN</div>
-						<input
-							className={style.inputField}
-							name='ISBN'
-							value={BBK}
-							onChange={(e) => xaos(e, "BBK")}
-						></input>
-						<div className={style.inputFieldName}>Город издания</div>
-						<input
-							className={style.inputField}
-							name='year'
-							value={BBK}
-							onChange={(e) => xaos(e, "BBK")}
-						></input>
-						<div className={style.inputFieldName}>Тип издания</div>
-						<input
-							className={style.inputField}
-							name='type'
-							value={BBK}
-							onChange={(e) => xaos(e, "BBK")}
-						></input>
-						<div className={style.inputFieldName}>Описание</div>
-						<input
-							className={style.inputField}
-							name='description'
-							value={BBK}
-							onChange={(e) => xaos(e, "BBK")}
-						></input>
+						{inputInfo.map(info => (
+							<>
+								<div key={currentPage} className={style.inputFieldName}>
+									{info.title}
+								</div>
+								<input
+									className={style.inputField}
+									name={info.name}
+									value={info.value}
+									onChange={e => xaos(e, info.name)}
+								/>
+							</>
+						))}
 					</div>
 				</div>
 			</div>

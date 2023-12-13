@@ -1,18 +1,20 @@
-function parseTextByRegex(): string[] {
-  const matches: string[] = [];
-	const text = "УДК 1234, ББК 5678, ISBN 978-3-16-148410-0";
-	const regexArr = [/\bУДК\b/g, /\bББК\b/g, /\bISBN\b/g];
-  regexArr.forEach((regex) => {
-    let match: RegExpExecArray | null;
-    while ((match = regex.exec(text)) !== null) {
-      matches.push(match[0]);
-    }
-  });
+const parseTextByRegex = (text: string) => {
+	let array = text.split(' ')
+	let result = new Map()
 
-  return matches;
+	for (let i = 0; i < array.length; i++) {
+		switch (array[i]) {
+			case 'УДК':
+				result.set('УДК', array[i + 1])
+				break
+			case 'ББК':
+				result.set('ББК', array[i + 1])
+				break
+			case '15ВМ':
+				result.set('15ВМ', array[i + 1])
+				break
+		}
+	}
+	return result
 }
-
-const matches = parseTextByRegex();
-console.log(matches); // Output: ['UDC', 'BBK', 'ISBN']
-
-export default parseTextByRegex;
+export default parseTextByRegex
