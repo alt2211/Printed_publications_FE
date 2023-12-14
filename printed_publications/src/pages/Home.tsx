@@ -24,6 +24,35 @@ export default () => {
         { title: 'Тип издания', dataIndex: 'type' },
     ]
 
+    const books = [
+        {
+            key: 1,
+            authorName: 'Автор 1',
+            name: 'Книга 1',
+            date: '01.01.2022',
+            city: 'Город 1',
+            description: 'Описание 1',
+            count: 10,
+            bbk: 'ББК 123',
+            udk: 'УДК 456',
+            isbn: 'ISBN 789',
+            type: 'Тип 1',
+          },
+          {
+            key: 2,
+            authorName: 'Автор 2',
+            name: 'Книга 2',
+            date: '02.01.2022',
+            city: 'Город 2',
+            description: 'Описание 2',
+            count: 15,
+            bbk: 'ББК 456',
+            udk: 'УДК 789',
+            isbn: 'ISBN 012',
+            type: 'Тип 2',
+          },
+      ];
+
 
 
     return (
@@ -70,6 +99,8 @@ export default () => {
             <div className='frame-without-color-2'>
                 <Table
                     columns={columns}
+                    dataSource={books}
+                    pagination={{ pageSize: 25}}
                     className="custom-table"
                 />  
             </div>
