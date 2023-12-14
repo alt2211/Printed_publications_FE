@@ -14,10 +14,10 @@ const Settings = () => {
   const userString = localStorage.getItem('user');
   const user = userString ? JSON.parse(userString) : null;
 
-  const [username, setUsername] = useState(user.username);
+  const [email, setEmail] = useState(user.email);
 
   const handleInputChange = (e) => {
-    setUsername(e.target.value);
+    setEmail(e.target.value);
   }
 
   const logout = () => {
@@ -32,7 +32,7 @@ const Settings = () => {
     const newPassword1 = formData.get('pass1');
     const newPassword2 = formData.get('pass2');
 
-    if (username !== user.username) {
+    if (email !== user.email) {
       handleEmailChange();
     }
     if (newPassword1 !== '' && newPassword2 !== '' && newPassword1 === newPassword2) {
@@ -54,7 +54,7 @@ const Settings = () => {
         },
         body: JSON.stringify({
           userId: user.id,
-          newEmail: username,
+          newEmail: email,
         }),
       });
 
@@ -111,7 +111,7 @@ const Settings = () => {
           <div>
             <h4 className={styled.inputBoxName}>Электронная почта</h4>
             <input name='email' type="text" className={styled.inputBox}
-              value={username}
+              value={email}
               onChange={handleInputChange}
               placeholder='Введите почту'></input>
           </div>
