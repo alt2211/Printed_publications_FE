@@ -81,14 +81,10 @@ const LoginPage = () => {
               password: password,
             }),
           });
-          //ИСПРАВИТЬ!!!
-          const loggedUser = {id: 1, username: `${email}`, password: `${password}`};
+          const userData = await response.json();
+          const loggedUser = {id: userData.userId, 
+            username: userData.username , password: userData.password};
           setUser(loggedUser)
-          // const data = await response.json();
-          // console.log(data);
-          // const { token } = data;
-          // localStorage.setItem('token', token);
-          // console.log(localStorage.getItem('token'));
         } catch (error) {
           console.error('Ошибка:', error);
         }
