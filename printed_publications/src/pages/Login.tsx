@@ -61,7 +61,6 @@ const LoginPage = () => {
     const formData = new FormData(e.target);
     const email = formData.get('email');
     const password = formData.get('password');
-
     // if (email === '1@g' && password === '1') {
     //   navigate('/');
     // } else {
@@ -77,13 +76,13 @@ const LoginPage = () => {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              username: email,
+              email: email,
               password: password,
             }),
           });
           const userData = await response.json();
           const loggedUser = {id: userData.userId, 
-            username: userData.username , password: userData.password};
+            email: userData.email , password: userData.password};
           setUser(loggedUser)
         } catch (error) {
           console.error('Ошибка:', error);
@@ -133,7 +132,7 @@ const RegPage = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ 
-          username: email,
+          email: email,
           password: password,
          }),
       })
