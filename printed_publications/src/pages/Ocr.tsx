@@ -3,6 +3,7 @@ import React, { useRef, useState } from 'react'
 import { createWorker } from 'tesseract.js'
 import '../Styles/App.css'
 import style from '../ui/ocr/ocr.module.scss'
+import parseTextByRegex from '../ui/ocr/parser.ts'
 
 export default () => {
 	const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -12,13 +13,14 @@ export default () => {
 		setOcrText('')
 		setIsLoading(true)
 
-		const worker = await createWorker('rus', undefined, {
-			logger: m => console.log(m.progress * 100),
+		const worker = await createWorker('rus+eng', undefined, {
+			logger: m => console.log(Math.floor(m.progress * 100)),
 		})
 
 		const { data } = await worker.recognize(file)
 		setOcrText(data.text)
 		setIsLoading(false)
+		parseTextByRegex(data.text)
 	}
 
 	const [drag, setDrag] = React.useState(false)
@@ -40,6 +42,7 @@ export default () => {
 		e.preventDefault()
 		let files = [...e.dataTransfer.files]
 		doOCR(files[0])
+		setImage(URL.createObjectURL(e.target.files[0]))
 	}
 
 	const handleChange = function (e) {
@@ -88,10 +91,8 @@ export default () => {
 						type='file'
 						ref={fileInputRef}
 						onChange={handleChange}
-						multiple
 					></input>
 				</div>
-				{/* {parseTextByRegex()} */}
 			</div>
 		)
 	}
@@ -169,11 +170,11 @@ export default () => {
 		},
 		{
 			title: 'Автор',
-			name: 'autor',
+			name: 'author',
 			value: Author,
 		},
 		{
-			title: 'Название издания',
+			title: 'Название книги',
 			name: 'title_publication',
 			value: PublicationTitle,
 		},
@@ -209,7 +210,10 @@ export default () => {
 			<div className={style.container}>
 				<h1 style={{ marginBottom: '52px' }}>Добавление печатных изданий</h1>
 				<div className={style.elements}>
-					<div className={style.containerOcr}>{DragDropFile()}</div>
+					<div className={style.containerOcr}>
+						{DragDropFile()}
+						{/* {parseTextByRegex(ocrText)} */}
+					</div>
 					<div className={style.propertiesList}>
 						{inputInfo.map(info => (
 							<>
