@@ -169,17 +169,29 @@ export default () => {
           ...book,
           key: String(index + 1),
         }));
-        setBookData(booksWithKeys);
-        //   setBookData(await response.json());
+        return booksWithKeys;
       } catch (error) {
         console.error('Ошибка:', error);
       }
     };
 
-    useEffect(() => {
-      handleLoadBooks();
-    }, []);
+    // useEffect(() => {
+    //   let newData = handleLoadBooks();
+    //   setBookData(newData);
+    // }, []);
 
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const newData = await handleLoadBooks();
+          setBookData(newData);
+        } catch (error) {
+          console.error("Произошла ошибка при загрузке книг", error);
+        }
+      };
+    
+      fetchData();
+    }, []);
     const handleBookDataChange = () => {
       const uniqueAuthors = Array.from(new Set(bookData.map(book => book.author)));
       setAuthors(uniqueAuthors);
@@ -326,17 +338,25 @@ export default () => {
 
     const useFiltersAndSearch = (e) => {
       e.preventDefault();
-      // handleLoadBooks();
-      useFilters(e);
+      const fetchData = async () => {
+        try {
+          const newData = await handleLoadBooks();
+          applyFilters(e, newData);
+        } catch (error) {
+          console.error("Произошла ошибка при загрузке книг", error);
+        }
+      };
+      fetchData();
+
     }
 
-    const useFilters = (e) => {
+    const applyFilters = (e, newData: Book[]) => {
       e.preventDefault();
       let query;
       const formData = new FormData(e.target);
       query = formData.get('inputSearch');
       query = query?.toLowerCase();
-      let newData = [...bookData];
+      // let newData = [...bookData];
 
       if (query !== '') {
         newData = newData.filter((book) => {
