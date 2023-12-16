@@ -11,6 +11,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import type { InputRef } from 'antd';
 import { Form, Input, Popconfirm, Table, Select } from 'antd';
 import type { FormInstance } from 'antd/es/form';
+import ConfirmationModal from "../ui-kit/confirmation/confirmation.tsx";
 
 export default () => {
   const EditableContext = React.createContext<FormInstance<any> | null>(null);
@@ -189,7 +190,7 @@ export default () => {
           console.error("Произошла ошибка при загрузке книг", error);
         }
       };
-    
+
       fetchData();
     }, []);
     const handleBookDataChange = () => {
@@ -364,7 +365,7 @@ export default () => {
             if (book.hasOwnProperty(key) && typeof book[key] === 'string') {
               // Проверяем только поля типа string (можете рассмотреть другие типы при необходимости)
               if (book[key].toLowerCase().includes(query)) {
-                return true; 
+                return true;
               }
             }
           }
@@ -426,6 +427,32 @@ export default () => {
 
     }
 
+    const userString = localStorage.getItem('user');
+    const user = userString ? JSON.parse(userString) : null;
+    const [isModalVisible, setModalVisible] = useState(false);
+    const handleConfirm = async () => {
+      console.log('Действие подтверждено');
+      setModalVisible(false);
+            try {
+        //Переделать через env
+        const response = await fetch('http://localhost:5000/deleteAllBooks', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            id: user.id,
+          }),
+        });
+      } catch (error) {
+        console.error('Ошибка:', error);
+      }
+    };
+    const handleCancel = () => {
+      console.log('Действие отменено');
+      setModalVisible(false);
+    };
+
     return (
       <div>
         <form onSubmit={useFiltersAndSearch}>
@@ -468,7 +495,12 @@ export default () => {
             <div className={style.listActions}>
               <div className={style.Text1}>Действия со списком</div>
               {/* <Tag color='#EAF3DE' icon={<EditOutlined/>} className={style.editButton}>Редактировать</Tag> */}
-              <Tag color='#FEE' icon={<DeleteOutlined />} className={style.deleteButton}>Удалить всё</Tag>
+              <Tag color='#FEE' icon={<DeleteOutlined />} className={style.deleteButton} onClick={() => setModalVisible(true)}>Удалить всё</Tag>
+              <ConfirmationModal
+                visible={isModalVisible}
+                onConfirm={handleConfirm}
+                onCancel={handleCancel}
+              />
               <Tag color='#F0EDF5' icon={<DownloadOutlined />} className={style.exportButton}>Экспорт</Tag>
             </div>
             <div className={style.search}>

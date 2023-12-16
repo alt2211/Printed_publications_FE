@@ -6,11 +6,12 @@ import { useContext, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import styled from "../Styles/settings/settings.module.scss"
 import { MainContext } from '../MainContext.ts'
-import {IUser} from '../../types/User.ts'
+import { IUser } from '../../types/User.ts'
+import ConfirmationModal from "../ui-kit/confirmation/confirmation.tsx"
 
 const Settings = () => {
   const [page, setPage] = useState<string>('settings');
-  const {setUser} = useContext(MainContext);
+  const { setUser } = useContext(MainContext);
   const userString = localStorage.getItem('user');
   const user = userString ? JSON.parse(userString) : null;
 
@@ -39,10 +40,6 @@ const Settings = () => {
       handlePasswordChange(newPassword1);
     }
     logout();
-  }
-
-  const deleteUser = (e) => {
-    handleDeleteAccount();
   }
   const handleEmailChange = async () => {
     try {
@@ -81,7 +78,6 @@ const Settings = () => {
       console.error('Ошибка:', error);
     }
   };
-
   const handleDeleteAccount = async () => {
     try {
       //Переделать через env
@@ -100,12 +96,32 @@ const Settings = () => {
     }
   };
 
+  const [isModalVisible, setModalVisible] = useState(false);
+  const handleConfirm = () => {
+    // Ваш код для подтверждения действия
+    console.log('Действие подтверждено');
+    setModalVisible(false);
+    handleDeleteAccount();
+  };
+
+  const handleCancel = () => {
+    // Ваш код для отмены действия
+    console.log('Действие отменено');
+    setModalVisible(false);
+  };
+
   return (
     <>
       <div className={styled.box}>
-        <form className={styled.block}
+        <div className={styled.block}
           onSubmit={updateUser}>
-          <button className={styled.delete_Button} onClick={deleteUser}>Удалить аккаунт</button>
+          <button className={styled.delete_Button} onClick={() => setModalVisible(true)}>Удалить аккаунт</button>
+          <ConfirmationModal
+            visible={isModalVisible}
+            onConfirm={handleConfirm}
+            onCancel={handleCancel}
+          />
+          <form>
           <h1 className={styled.page_name}>Настройки</h1>
           <div className={styled.vector}></div>
           <div>
@@ -126,7 +142,8 @@ const Settings = () => {
             <img src="closedEye.svg" alt="Пароль скрыт" className={styled.closedEye} style={{ top: 365 }} />
           </div>
           <button class={styled.button_confirm}>Сохранить изменения</button>
-        </form>
+          </form>
+        </div>
       </div>
     </>
   )
