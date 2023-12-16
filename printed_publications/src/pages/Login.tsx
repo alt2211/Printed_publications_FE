@@ -52,9 +52,15 @@ const Authorization = () => {
   );
 };
 
+
 //Страница входа
 const LoginPage = () => {
   const {setUser} = useContext(MainContext)
+
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
 
   const onFinish = (e) => {
     e.preventDefault();
@@ -106,11 +112,13 @@ const LoginPage = () => {
           Пароль
         <input
           name='password'
-          type='password'
+          type={passwordVisible ? 'text' : 'password'}
           placeholder='Введите пароль'
 		  className='inputF'
         />
       </label> 
+      <img src={!passwordVisible ? "closedEye.svg" : "Eye.svg"} alt="Пароль скрыт" 
+            className={!passwordVisible ? 'closedEye' : 'Eye'} onClick={togglePasswordVisibility} />
       <div style={{ color: '#A609CB', textAlign: 'left',marginTop: '4px'}}>Забыли пароль?</div>
       <button className='next'>Продолжить</button>
     </form>
@@ -119,6 +127,10 @@ const LoginPage = () => {
 
 //Страница регистрации
 const RegPage = () => {
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
   const onFinish = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -161,16 +173,18 @@ const RegPage = () => {
         Пароль
         <input
           name='password'
-          type='password'
+          type={passwordVisible ? 'text' : 'password'}
           placeholder='Введите пароль'
 		  className='inputF'
         />
       </label>
+      <img src={!passwordVisible ? "closedEye.svg" : "Eye.svg"} alt="Пароль скрыт" 
+            className={!passwordVisible ? 'closedEye' : 'Eye'} onClick={togglePasswordVisibility} />
       <label className='text'>
         Подтвердите пароль
         <input
           name='repeatPassword'
-          type='password'
+          type={passwordVisible ? 'text' : 'password'}
           placeholder='Введите пароль'
 		  className='inputF'
         />

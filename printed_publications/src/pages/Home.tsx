@@ -5,13 +5,13 @@ import {
   DownloadOutlined,
 } from '@ant-design/icons';
 import style from '../ui/home/home.module.scss'
-import '../ui/dropdownlist/dropdownlist.tsx'
 // import { Book } from '../../types/Book.ts'
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import type { InputRef } from 'antd';
 import { Form, Input, Popconfirm, Table, Select } from 'antd';
 import type { FormInstance } from 'antd/es/form';
 import ConfirmationModal from "../ui-kit/confirmation/confirmation.tsx";
+import generateAndDownloadCSV from "../functions/exportList.tsx";
 
 export default () => {
   const EditableContext = React.createContext<FormInstance<any> | null>(null);
@@ -176,11 +176,6 @@ export default () => {
       }
     };
 
-    // useEffect(() => {
-    //   let newData = handleLoadBooks();
-    //   setBookData(newData);
-    // }, []);
-
     useEffect(() => {
       const fetchData = async () => {
         try {
@@ -304,13 +299,11 @@ export default () => {
             },
             body: JSON.stringify(newData[index]),
           });
-          //   console.log(index)
         } catch (error) {
           console.error('Ошибка:', error);
         }
       };
       handleEditBook();
-      // handleLoadBooks();
       setBookData(newData);
     };
 
@@ -357,13 +350,11 @@ export default () => {
       const formData = new FormData(e.target);
       query = formData.get('inputSearch');
       query = query?.toLowerCase();
-      // let newData = [...bookData];
 
       if (query !== '') {
         newData = newData.filter((book) => {
           for (const key in book) {
             if (book.hasOwnProperty(key) && typeof book[key] === 'string') {
-              // Проверяем только поля типа string (можете рассмотреть другие типы при необходимости)
               if (book[key].toLowerCase().includes(query)) {
                 return true;
               }
@@ -453,6 +444,8 @@ export default () => {
       setModalVisible(false);
     };
 
+
+
     return (
       <div>
         <form onSubmit={useFiltersAndSearch}>
@@ -501,7 +494,7 @@ export default () => {
                 onConfirm={handleConfirm}
                 onCancel={handleCancel}
               />
-              <Tag color='#F0EDF5' icon={<DownloadOutlined />} className={style.exportButton}>Экспорт</Tag>
+              <Tag color='#F0EDF5' icon={<DownloadOutlined />} className={style.exportButton} onClick={() => generateAndDownloadCSV(bookData)}>Экспорт</Tag>
             </div>
             <div className={style.search}>
               <input name='inputSearch' type="inputSearch" className={style.search1} />
