@@ -109,6 +109,10 @@ const Settings = () => {
     console.log('Действие отменено');
     setModalVisible(false);
   };
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
 
   return (
     <>
@@ -133,13 +137,14 @@ const Settings = () => {
           </div>
           <div>
             <h4 className={styled.inputBoxName}>Пароль</h4>
-            <input name='pass1' type="text" className={styled.inputBox} placeholder='Введите пароль'></input>
-            <img src="closedEye.svg" alt="Пароль скрыт" className={styled.closedEye} />
+            <input name='pass1' className={styled.inputBox} placeholder='Введите пароль' 
+            type={passwordVisible ? 'text' : 'password'}></input>
+            <img src={!passwordVisible ? "closedEye.svg" : "Eye.svg"} alt="Пароль скрыт" 
+            className={!passwordVisible ? styled.closedEye: styled.Eye} onClick={togglePasswordVisibility} />
           </div>
           <div>
             <h4 className={styled.inputBoxName}>Подтвердите пароль</h4>
-            <input name='pass2' type="text" className={styled.inputBox} placeholder='Повторите пароль'></input>
-            <img src="closedEye.svg" alt="Пароль скрыт" className={styled.closedEye} style={{ top: 365 }} />
+            <input name='pass2' type={passwordVisible ? 'text' : 'password'} className={styled.inputBox} placeholder='Повторите пароль'></input>
           </div>
           <button class={styled.button_confirm}>Сохранить изменения</button>
           </form>
