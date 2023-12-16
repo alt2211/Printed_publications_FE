@@ -8,7 +8,7 @@ import parseTextByRegex from '../ui/ocr/parser.ts'
 export default () => {
 	const [isLoading, setIsLoading] = useState<boolean>(false)
 	const [ocrText, setOcrText] = useState<string>('')
-
+	var parseText: Map<string, string> = new Map()
 	const doOCR = async (file: any) => {
 		setOcrText('')
 		setIsLoading(true)
@@ -20,7 +20,8 @@ export default () => {
 		const { data } = await worker.recognize(file)
 		setOcrText(data.text)
 		setIsLoading(false)
-		parseTextByRegex(data.text)
+		parseText = parseTextByRegex(data.text)
+		handleInfo()
 	}
 
 	const [drag, setDrag] = React.useState(false)
@@ -99,33 +100,131 @@ export default () => {
 
 	const [currentPage, setCurrentPage] = useState(1)
 	const [totalPage, setTotalPage] = useState(1)
-	// const [fieldValues, setFieldValues] = useState(Array(9).fill('-'))
-	const [BBK, setBBK] = useState('-')
-	const [YDK, setYDK] = useState('-')
-	const [Author, setAuthor] = useState('-')
-	const [PublicationTitle, setPublicationTitle] = useState('-')
-	const [Year, setYear] = useState('-')
-	const [ISBN, setISBN] = useState('-')
-	const [City, setCity] = useState('-')
-	const [Type, setType] = useState('-')
-	const [Description, setDescription] = useState('-')
+
+	const useInputInfo = () => {
+		const [BBK, setBBK] = useState('')
+		const [YDK, setYDK] = useState('')
+		const [Author, setAuthor] = useState('')
+		const [PublicationTitle, setPublicationTitle] = useState('')
+		const [Year, setYear] = useState('')
+		const [ISBN, setISBN] = useState('')
+		const [City, setCity] = useState('')
+		const [Type, setType] = useState('')
+		const [Description, setDescription] = useState('')
+
+		const values = {
+			BBK,
+			YDK,
+			Author,
+			PublicationTitle,
+			Year,
+			ISBN,
+			City,
+			Type,
+			Description,
+		}
+
+		return {
+			values,
+			setBBK,
+			setYDK,
+			setAuthor,
+			setPublicationTitle,
+			setYear,
+			setISBN,
+			setCity,
+			setType,
+			setDescription,
+		}
+	}
+
+	const {
+		values,
+		setBBK,
+		setYDK,
+		setAuthor,
+		setPublicationTitle,
+		setYear,
+		setISBN,
+		setCity,
+		setType,
+		setDescription,
+	} = useInputInfo()
+
+	const unRecognizet = 'Не распознано'
+
+	const handleInfo = () => {
+		setBBK(
+			`${parseText.get('ББК')}` != 'undefined'
+				? `${parseText.get('ББК')}`
+				: unRecognizet
+		)
+		setYDK(
+			`${parseText.get('УДК')}` != 'undefined'
+				? `${parseText.get('УДК')}`
+				: unRecognizet
+		)
+		setAuthor(
+			`${parseText.get('Автор')}` != 'undefined'
+				? `${parseText.get('Автор')}`
+				: unRecognizet
+		)
+		setPublicationTitle(
+			`${parseText.get('Название книги')}` !== 'undefined'
+				? `${parseText.get('Название книги')}`
+				: unRecognizet
+		)
+		setYear(
+			`${parseText.get('Год публикации')}` !== 'undefined'
+				? `${parseText.get('Год публикации')}`
+				: unRecognizet
+		)
+		setISBN(
+			`${parseText.get('ISBN')}` !== 'undefined'
+				? `${parseText.get('ISBN')}`
+				: unRecognizet
+		)
+		setCity(
+			`${parseText.get('Город издания')}` !== 'undefined'
+				? `${parseText.get('Город издания')}`
+				: unRecognizet
+		)
+		setType(
+			`${parseText.get('Тип издания')}` !== 'undefined'
+				? `${parseText.get('Тип издания')}`
+				: unRecognizet
+		)
+	}
+
+	// const [BBK, setBBK] = useState<string>('')
+	// const [YDK, setYDK] = useState('')
+	// const [Author, setAuthor] = useState('')
+	// const [PublicationTitle, setPublicationTitle] = useState()
+	// const [Year, setYear] = useState('')
+	// const [ISBN, setISBN] = useState('')
+	// const [City, setCity] = useState('')
+	// const [Type, setType] = useState('')
+	// const [Description, setDescription] = useState('')
 
 	//const myArray = ['371821', '293738', '392817']
 
-	const xaos = (e: React.ChangeEvent<HTMLInputElement>, name: string) => {
+	const xaos = (e, name) => {
 		const input = e.target.value
-		if (name === 'BBK') {
-			setBBK(input)
-		}
+		if (name == 'BBK') setBBK(input)
+		if (name == 'YDK') setYDK(input)
+		if (name == 'author') setAuthor(input)
+		if (name == 'title_publication') setPublicationTitle(input)
+		if (name == 'year_publication') setYear(input)
+		if (name == 'city_publication') setCity(input)
+		if (name == 'ISBN') setISBN(input)
+		if (name == 'type_publication') setType(input)
+		if (name == 'description') setDescription(input)
 	}
 
 	const goToPreviousPage = () => {
 		if (currentPage > 1) {
-			// setCurrentPage((currentPage) => currentPage - 1)
-			// setFieldValues([`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`])
 			setCurrentPage(currentPage => {
 				const newPage = currentPage - 1
-				// setFieldValues(Array(9).fill(`${newPage}`));
 				updateInputFields()
 				return newPage
 			})
@@ -138,11 +237,8 @@ export default () => {
 
 	const goToNextPage = () => {
 		if (currentPage < totalPage) {
-			// setCurrentPage((currentPage) => currentPage + 1)
-			// setFieldValues([`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`,`${currentPage}`])
 			setCurrentPage(currentPage => {
 				const newPage = currentPage + 1
-				// setFieldValues(Array(9).fill(`${newPage}`));
 				updateInputFields()
 				return newPage
 			})
@@ -161,47 +257,47 @@ export default () => {
 		{
 			title: 'ББК',
 			name: 'BBK',
-			value: BBK,
+			value: values.BBK,
 		},
 		{
 			title: 'УДК',
-			name: 'UDK',
-			value: YDK,
+			name: 'YDK',
+			value: values.YDK,
 		},
 		{
 			title: 'Автор',
 			name: 'author',
-			value: Author,
+			value: values.Author,
 		},
 		{
 			title: 'Название книги',
 			name: 'title_publication',
-			value: PublicationTitle,
+			value: values.PublicationTitle,
 		},
 		{
 			title: 'Год публикации',
 			name: 'year_publication',
-			value: Year,
+			value: values.Year,
 		},
 		{
 			title: 'ISBN',
 			name: 'ISBN',
-			value: ISBN,
+			value: values.ISBN,
 		},
 		{
 			title: 'Город издания',
 			name: 'city_publication',
-			value: City,
+			value: values.City,
 		},
 		{
 			title: 'Тип издания',
 			name: 'type_publication',
-			value: Type,
+			value: values.Type,
 		},
 		{
 			title: 'Описание',
 			name: 'description',
-			value: Description,
+			value: '',
 		},
 	]
 
@@ -210,10 +306,7 @@ export default () => {
 			<div className={style.container}>
 				<h1 style={{ marginBottom: '52px' }}>Добавление печатных изданий</h1>
 				<div className={style.elements}>
-					<div className={style.containerOcr}>
-						{DragDropFile()}
-						{/* {parseTextByRegex(ocrText)} */}
-					</div>
+					<div className={style.containerOcr}>{DragDropFile()}</div>
 					<div className={style.propertiesList}>
 						{inputInfo.map(info => (
 							<>
