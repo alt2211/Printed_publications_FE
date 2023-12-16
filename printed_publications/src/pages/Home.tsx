@@ -12,6 +12,7 @@ import type { InputRef } from 'antd';
 import { Form, Input, Popconfirm, Table, Select } from 'antd';
 import type { FormInstance } from 'antd/es/form';
 import ConfirmationModal from "../ui-kit/confirmation/confirmation.tsx";
+import generateAndDownloadCSV from "../functions/exportList.tsx";
 
 export default () => {
   const EditableContext = React.createContext<FormInstance<any> | null>(null);
@@ -453,6 +454,8 @@ export default () => {
       setModalVisible(false);
     };
 
+
+
     return (
       <div>
         <form onSubmit={useFiltersAndSearch}>
@@ -501,7 +504,7 @@ export default () => {
                 onConfirm={handleConfirm}
                 onCancel={handleCancel}
               />
-              <Tag color='#F0EDF5' icon={<DownloadOutlined />} className={style.exportButton}>Экспорт</Tag>
+              <Tag color='#F0EDF5' icon={<DownloadOutlined />} className={style.exportButton} onClick={() => generateAndDownloadCSV(bookData)}>Экспорт</Tag>
             </div>
             <div className={style.search}>
               <input name='inputSearch' type="inputSearch" className={style.search1} />
