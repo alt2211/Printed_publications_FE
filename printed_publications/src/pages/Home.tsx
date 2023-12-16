@@ -11,6 +11,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import type { InputRef } from 'antd';
 import { Form, Input, Popconfirm, Table, Select } from 'antd';
 import type { FormInstance } from 'antd/es/form';
+import ConfirmationModal from "../ui-kit/confirmation/confirmation.tsx";
 
 export default () => {
   const EditableContext = React.createContext<FormInstance<any> | null>(null);
@@ -144,6 +145,11 @@ export default () => {
       value: author.toString(),
       label: author.toString(),
     }));
+
+    optionsDrop.unshift({
+      value: 'Все авторы',
+      label: 'Все авторы',
+    });
     const [bookData, setBookData] = useState<Book[]>([]);
     const handleLoadBooks = async () => {
       const userString = localStorage.getItem('user');
@@ -164,17 +170,29 @@ export default () => {
           ...book,
           key: String(index + 1),
         }));
-        setBookData(booksWithKeys);
-        //   setBookData(await response.json());
+        return booksWithKeys;
       } catch (error) {
         console.error('Ошибка:', error);
       }
     };
 
-    useEffect(() => {
-      handleLoadBooks();
-    }, []);
+    // useEffect(() => {
+    //   let newData = handleLoadBooks();
+    //   setBookData(newData);
+    // }, []);
 
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const newData = await handleLoadBooks();
+          setBookData(newData);
+        } catch (error) {
+          console.error("Произошла ошибка при загрузке книг", error);
+        }
+      };
+
+      fetchData();
+    }, []);
     const handleBookDataChange = () => {
       const uniqueAuthors = Array.from(new Set(bookData.map(book => book.author)));
       setAuthors(uniqueAuthors);
@@ -319,126 +337,180 @@ export default () => {
       };
     });
 
-    const SearchBooks = (e) => {
+    const useFiltersAndSearch = (e) => {
+      e.preventDefault();
+      const fetchData = async () => {
+        try {
+          const newData = await handleLoadBooks();
+          applyFilters(e, newData);
+        } catch (error) {
+          console.error("Произошла ошибка при загрузке книг", error);
+        }
+      };
+      fetchData();
+
+    }
+
+    const applyFilters = (e, newData: Book[]) => {
       e.preventDefault();
       let query;
       const formData = new FormData(e.target);
       query = formData.get('inputSearch');
       query = query?.toLowerCase();
-      console.log(query);
+      // let newData = [...bookData];
 
-      if (query === '') {
-        handleLoadBooks();
-      }
-      else {
-        const newData = bookData.filter((book) => {
+      if (query !== '') {
+        newData = newData.filter((book) => {
           for (const key in book) {
             if (book.hasOwnProperty(key) && typeof book[key] === 'string') {
               // Проверяем только поля типа string (можете рассмотреть другие типы при необходимости)
               if (book[key].toLowerCase().includes(query)) {
-                return true; // Если найдено соответствие в текущем поле, вернуть true
+                return true;
               }
             }
-            // return false;
           }
         });
-        setBookData(newData);
+      } else {
+        console.log('Поиск не использовался')
       }
-    };
 
-    const useFilters = (e) => {
-      e.preventDefault();
-      const formData = new FormData(e.target);
       const date1Entry = formData.get('date1');
       let date1AsNumber;
-      // Проверка на наличие значения и его тип
-      if (date1Entry !== null && typeof date1Entry === 'string') {
+      if (date1Entry !== null && typeof date1Entry === 'string' && date1Entry !== '') {
         date1AsNumber = parseInt(date1Entry, 10);
-        // Проверка на NaN (не число)
-        if (isNaN(date1AsNumber)) {
-          console.error('Введенное значение не является числом');
-        } else {
-          console.log('Число:', date1AsNumber);
-        }
-      } else {
-        console.error('Значение не найдено или не является строкой');
-      }
-      const date2Entry = formData.get('date2');
-      let date2AsNumber;
-      if (date2Entry !== null && typeof date2Entry === 'string') {
-        date2AsNumber = parseInt(date2Entry, 10);
-        // Проверка на NaN (не число)
-        if (isNaN(date2AsNumber)) {
-          console.error('Введенное значение не является числом');
-        } else {
-          console.log('Число:', date2AsNumber);
-        }
-      } else {
-        console.error('Значение не найдено или не является строкой');
-      }
-      const newData = bookData.filter((book) => {
-        for (const key in book){
-          if (key === 'date'){
-            console.log(book[key], date1AsNumber,date2AsNumber)
-            if (book[key] >= date1AsNumber && book[key] <= date2AsNumber){
-              return true;
+        newData = newData.filter((book) => {
+          for (const key in book) {
+            if (key === 'date') {
+              if (book[key] >= date1AsNumber) {
+                return true;
+              }
             }
           }
-        }
-      })
+        })
+      } else {
+        console.log('Первое число не использовалось')
+      }
+
+
+      const date2Entry = formData.get('date2');
+      let date2AsNumber;
+      if (date2Entry !== null && typeof date2Entry === 'string' && date2Entry !== '') {
+        date2AsNumber = parseInt(date2Entry, 10);
+        newData = newData.filter((book) => {
+          for (const key in book) {
+            if (key === 'date') {
+              if (book[key] <= date2AsNumber) {
+                return true;
+              }
+            }
+          }
+        })
+      } else {
+        console.log('Второе число не использовалось')
+      }
+
+      if (elementDrop !== 'Все авторы' && elementDrop !== '') {
+        newData = newData.filter((book) => {
+          for (const key in book) {
+            if (key === 'author') {
+              if (book[key] === elementDrop) {
+                return true;
+              }
+            }
+          }
+        })
+      } else {
+        console.log('Автор не использовался')
+      }
+      console.log('------------------')
       setBookData(newData);
+
     }
+
+    const userString = localStorage.getItem('user');
+    const user = userString ? JSON.parse(userString) : null;
+    const [isModalVisible, setModalVisible] = useState(false);
+    const handleConfirm = async () => {
+      console.log('Действие подтверждено');
+      setModalVisible(false);
+            try {
+        //Переделать через env
+        const response = await fetch('http://localhost:5000/deleteAllBooks', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            id: user.id,
+          }),
+        });
+      } catch (error) {
+        console.error('Ошибка:', error);
+      }
+    };
+    const handleCancel = () => {
+      console.log('Действие отменено');
+      setModalVisible(false);
+    };
 
     return (
       <div>
-        <div className={style.frameWithoutColor}>
-          <div className={style.bigName}>Список печатный изданий</div>
-          <form name='searchFilters' className={style.filters} onSubmit={useFilters}>
-            <div className={style.date}>
-              <input name='date1' type="text" className={style.date1} placeholder='Дата начала' />
-              <div className={style.imageWrapper2}>
-                <img src="CalendarCheck.svg" alt="MagnifyingGlass" />
+        <form onSubmit={useFiltersAndSearch}>
+          <div className={style.frameWithoutColor}>
+            <div className={style.bigName}>Список печатный изданий</div>
+            <div className={style.filters}>
+              <div className={style.date}>
+                <input name='date1' type="text" className={style.date1} placeholder='Дата начала' />
+                <div className={style.imageWrapper2}>
+                  <img src="CalendarCheck.svg" alt="MagnifyingGlass" />
+                </div>
               </div>
-            </div>
-            <div className={style.date}>
-              <input name='date2' type="text" className={style.date1} placeholder='Дата конца' />
-              <div className={style.imageWrapper2}>
-                <img src="CalendarCheck.svg" alt="MagnifyingGlass" />
+              <div className={style.date}>
+                <input name='date2' type="text" className={style.date1} placeholder='Дата конца' />
+                <div className={style.imageWrapper2}>
+                  <img src="CalendarCheck.svg" alt="MagnifyingGlass" />
+                </div>
               </div>
+              <div className={style.dropDownList}>
+                <Select
+                  showSearch
+                  placeholder="Выберите автора"
+                  optionFilterProp="children"
+                  onClick={handleBookDataChange}
+                  onChange={onChangeDrop}
+                  onSearch={onSearchDrop}
+                  filterOption={filterOptionDrop}
+                  style={{ width: "442px", height: "52px", textAlign: 'left' }}
+                  options={optionsDrop}
+                  defaultValue={optionsDrop.length > 0 ? optionsDrop[0].value : undefined}
+                />
+              </div>
+              {/* <button style={{ backgroundColor: '#550DB2', color: 'white', width: '142px' }}>
+                Применить
+              </button> */}
             </div>
-            <div  className={style.dropDownList}>
-              <Select
-                showSearch
-                placeholder="Выберите автора"
-                optionFilterProp="children"
-                onClick={handleBookDataChange}
-                onChange={onChangeDrop}
-                onSearch={onSearchDrop}
-                filterOption={filterOptionDrop}
-                style={{ width: "442px", height: "52px", textAlign: 'left' }}
-                options={optionsDrop}
-              />
-            </div>
-            <button style={{ backgroundColor: '#550DB2', color: 'white', width: '142px' }}>
-              Применить
-            </button>
-          </form>
-        </div>
-
-        <div className={style.frc}>
-          <div className={style.listActions}>
-            <div className={style.Text1}>Действия со списком</div>
-            {/* <Tag color='#EAF3DE' icon={<EditOutlined/>} className={style.editButton}>Редактировать</Tag> */}
-            <Tag color='#FEE' icon={<DeleteOutlined />} className={style.deleteButton}>Удалить всё</Tag>
-            <Tag color='#F0EDF5' icon={<DownloadOutlined />} className={style.exportButton}>Экспорт</Tag>
           </div>
-          <form name='SearchForm' className={style.search} onSubmit={SearchBooks}>
-            <input name='inputSearch' type="inputSearch" className={style.search1} />
-            <button className={style.imageWrapper}>
-              <img src="MagnifyingGlass.svg" alt="MagnifyingGlass" />
-            </button>
-          </form>
-        </div>
+
+          <div className={style.frc}>
+            <div className={style.listActions}>
+              <div className={style.Text1}>Действия со списком</div>
+              {/* <Tag color='#EAF3DE' icon={<EditOutlined/>} className={style.editButton}>Редактировать</Tag> */}
+              <Tag color='#FEE' icon={<DeleteOutlined />} className={style.deleteButton} onClick={() => setModalVisible(true)}>Удалить всё</Tag>
+              <ConfirmationModal
+                visible={isModalVisible}
+                onConfirm={handleConfirm}
+                onCancel={handleCancel}
+              />
+              <Tag color='#F0EDF5' icon={<DownloadOutlined />} className={style.exportButton}>Экспорт</Tag>
+            </div>
+            <div className={style.search}>
+              <input name='inputSearch' type="inputSearch" className={style.search1} />
+              <button className={style.imageWrapper}>
+                <img src="MagnifyingGlass.svg" alt="MagnifyingGlass" />
+              </button>
+            </div>
+          </div>
+        </form>
 
         <div className='frame-without-color-2'>
           <Table
