@@ -5,7 +5,6 @@ import {
   DownloadOutlined,
 } from '@ant-design/icons';
 import style from '../ui/home/home.module.scss'
-import '../ui/dropdownlist/dropdownlist.tsx'
 // import { Book } from '../../types/Book.ts'
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import type { InputRef } from 'antd';
@@ -177,11 +176,6 @@ export default () => {
       }
     };
 
-    // useEffect(() => {
-    //   let newData = handleLoadBooks();
-    //   setBookData(newData);
-    // }, []);
-
     useEffect(() => {
       const fetchData = async () => {
         try {
@@ -305,13 +299,11 @@ export default () => {
             },
             body: JSON.stringify(newData[index]),
           });
-          //   console.log(index)
         } catch (error) {
           console.error('Ошибка:', error);
         }
       };
       handleEditBook();
-      // handleLoadBooks();
       setBookData(newData);
     };
 
@@ -358,13 +350,11 @@ export default () => {
       const formData = new FormData(e.target);
       query = formData.get('inputSearch');
       query = query?.toLowerCase();
-      // let newData = [...bookData];
 
       if (query !== '') {
         newData = newData.filter((book) => {
           for (const key in book) {
             if (book.hasOwnProperty(key) && typeof book[key] === 'string') {
-              // Проверяем только поля типа string (можете рассмотреть другие типы при необходимости)
               if (book[key].toLowerCase().includes(query)) {
                 return true;
               }
