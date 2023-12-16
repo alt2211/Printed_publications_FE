@@ -8,7 +8,11 @@ import parseTextByRegex from '../ui/ocr/parser.ts'
 export default () => {
 	const [isLoading, setIsLoading] = useState<boolean>(false)
 	const [ocrText, setOcrText] = useState<string>('')
-	var parseText: Map<string, string> = new Map()
+
+	var parseText
+	var recognizedTextArray = []
+	var ImgArray
+
 	const doOCR = async (file: any) => {
 		setOcrText('')
 		setIsLoading(true)
@@ -21,6 +25,7 @@ export default () => {
 		setOcrText(data.text)
 		setIsLoading(false)
 		parseText = parseTextByRegex(data.text)
+		//recognizedTextArray.push(parseText)
 		handleInfo()
 	}
 
@@ -42,15 +47,21 @@ export default () => {
 	const onDropHandler = e => {
 		e.preventDefault()
 		let files = [...e.dataTransfer.files]
-		doOCR(files[0])
-		setImage(URL.createObjectURL(e.target.files[0]))
+		for (let i = 0; i < files.length; i++) {
+			doOCR(files[i])
+			setImage(URL.createObjectURL(files[i]))
+		}
 	}
 
-	const handleChange = function (e) {
+	const handleChange = async(e) => {
 		e.preventDefault()
-		if (e.target.files && e.target.files[0]) {
-			doOCR(e.target.files[0])
-			setImage(URL.createObjectURL(e.target.files[0]))
+		let files = [...e.target.files]
+		setTotalPage(files.length)
+		if (files) {
+			for (let i = 0; i < files.length; i++) {
+				await doOCR(files[i])
+				setImage(URL.createObjectURL(files[i]))
+			}
 		}
 	}
 
@@ -92,6 +103,7 @@ export default () => {
 						type='file'
 						ref={fileInputRef}
 						onChange={handleChange}
+						multiple
 					></input>
 				</div>
 			</div>
@@ -196,18 +208,6 @@ export default () => {
 		)
 	}
 
-	// const [BBK, setBBK] = useState<string>('')
-	// const [YDK, setYDK] = useState('')
-	// const [Author, setAuthor] = useState('')
-	// const [PublicationTitle, setPublicationTitle] = useState()
-	// const [Year, setYear] = useState('')
-	// const [ISBN, setISBN] = useState('')
-	// const [City, setCity] = useState('')
-	// const [Type, setType] = useState('')
-	// const [Description, setDescription] = useState('')
-
-	//const myArray = ['371821', '293738', '392817']
-
 	const xaos = (e, name) => {
 		const input = e.target.value
 		if (name == 'BBK') setBBK(input)
@@ -297,7 +297,7 @@ export default () => {
 		{
 			title: 'Описание',
 			name: 'description',
-			value: '',
+			value: values.Description,
 		},
 	]
 
@@ -345,9 +345,9 @@ export default () => {
 					</button>
 				</div>
 				<div className={style.bottomElement2}>
-					<button className={style.addMore} onClick={e => dragLeaveHandler(e)}>
+					{/* <button className={style.addMore} onClick={e => dragLeaveHandler(e)}>
 						Добавить еще
-					</button>
+					</button> */}
 					<button className={style.save}>Сохранить</button>
 				</div>
 			</div>
