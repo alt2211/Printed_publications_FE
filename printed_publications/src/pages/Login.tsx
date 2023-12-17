@@ -88,7 +88,8 @@ const LoginPage = () => {
           });
           const userData = await response.json();
           const loggedUser = {id: userData.userId, 
-            email: userData.email , password: userData.password};
+            email: userData.email};
+            localStorage.setItem('token', userData.token);
           setUser(loggedUser)
         } catch (error) {
           console.error('Ошибка:', error);
