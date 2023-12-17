@@ -174,9 +174,9 @@ const RegPage = () => {
           placeholder='Введите пароль'
           className='inputF'
         />
-      </label>
-      <img src={!passwordVisible ? "closedEye.svg" : "Eye.svg"} alt="Пароль скрыт"
+              <img src={!passwordVisible ? "closedEye.svg" : "Eye.svg"} alt="Пароль скрыт"
         className={!passwordVisible ? 'closedEye' : 'Eye'} onClick={togglePasswordVisibility} />
+      </label>
       <label className='text'>
         Подтвердите пароль
         <input
