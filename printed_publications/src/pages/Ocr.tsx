@@ -4,6 +4,7 @@ import { createWorker } from 'tesseract.js'
 import '../Styles/App.css'
 import style from '../ui/ocr/ocr.module.scss'
 import parseTextByRegex from '../ui/ocr/parser.ts'
+import { Book } from '../../types/Book.ts'
 
 
 export default () => {
@@ -322,20 +323,6 @@ export default () => {
 	const saveBook = () => {
 		const userString = localStorage.getItem('user');
 		const user = userString ? JSON.parse(userString) : null;
-
-		interface Book {
-			id_user: number;
-			author: string;
-			title: string;
-			date: number;
-			city: string;
-			description?: string;
-			quantity: number;
-			lbc: string;
-			udc: string;
-			ISBN: string;
-			publication_type: string;
-		}
 		
 		const yearString = recognizedTextArray[currentPage-1]['Год публикации'];
 		let yearNumber = yearString !== null ? parseInt(yearString, 10) : 0;

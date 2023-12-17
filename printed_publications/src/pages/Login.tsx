@@ -3,7 +3,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { notification } from 'antd';
 import { MainContext } from "../MainContext.ts"
-import '../Styles/login.scss';
+import '../ui/login/login.scss'
 
 //Выбор вход или регистрация
 const Authorization = () => {
@@ -84,7 +84,6 @@ const LoginPage = () => {
           password: password,
         }),
       });
-      //Обработка ответа от сервера
       const userData = await response.json();
       if (userData.message === 'Вход успешен') {
         const loggedUser = {
