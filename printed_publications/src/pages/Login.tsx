@@ -65,8 +65,10 @@ const LoginPage = () => {
   const onFinish = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
+
     const email = formData.get('email');
     const password = formData.get('password');
+
     handleLogin(email, password);
   };
 
@@ -82,13 +84,22 @@ const LoginPage = () => {
           password: password,
         }),
       });
+      //Обработка ответа от сервера
       const userData = await response.json();
-      const loggedUser = {
-        id: userData.userId,
-        email: userData.email
-      };
-      localStorage.setItem('token', userData.token);
-      setUser(loggedUser)
+      if (userData.message === 'Вход успешен') {
+        const loggedUser = {
+          id: userData.userId,
+          email: userData.email
+        };
+        localStorage.setItem('token', userData.token);
+        setUser(loggedUser);
+      } else {
+        notification.error({
+          message: 'Пользователь',
+          description: userData.message,
+          duration: 1,
+        });
+      }
     } catch (error) {
       console.error('Ошибка:', error);
     }
@@ -131,10 +142,25 @@ const RegPage = () => {
   const onFinish = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
+
     const email = formData.get('email');
     const password = formData.get('password');
     const repeatPassword = formData.get('repeatPassword');
-    const handleRegister = async () => {
+
+    if (password === repeatPassword) {
+      handleRegister(email, password);
+    }
+    else {
+      notification.error({
+        message: 'Ошибка',
+        description: 'Пароли на совпадают.',
+        duration: 1,
+      });
+    }
+  };
+
+  const handleRegister = async (email, password) => {
+    try {
       const response = await fetch('http://localhost:5000/register/register', {
         method: 'POST',
         headers: {
@@ -144,15 +170,19 @@ const RegPage = () => {
           email: email,
           password: password,
         }),
-      })
-        .then(response => response.json())
-        .then(data => {
-          console.log(data);
-          //Обработка ответа от сервера
-        })
-        .catch(error => console.error('Ошибка:', error));
-    };
-    handleRegister();
+      });
+      const message = await response.json();
+      if (message.message !== 'Пользователь успешно зарегистрирован') {
+        notification.error({
+          message: 'Пользователь',
+          description: message.message,
+          duration: 1,
+        });
+      }
+    }
+    catch (error) {
+      console.error('Ошибка:', error);
+    }
   };
 
   return (
@@ -174,8 +204,8 @@ const RegPage = () => {
           placeholder='Введите пароль'
           className='inputF'
         />
-              <img src={!passwordVisible ? "closedEye.svg" : "Eye.svg"} alt="Пароль скрыт"
-        className={!passwordVisible ? 'closedEye' : 'Eye'} onClick={togglePasswordVisibility} />
+        <img src={!passwordVisible ? "closedEye.svg" : "Eye.svg"} alt="Пароль скрыт"
+          className={!passwordVisible ? 'closedEye' : 'Eye'} onClick={togglePasswordVisibility} />
       </label>
       <label className='text'>
         Подтвердите пароль
