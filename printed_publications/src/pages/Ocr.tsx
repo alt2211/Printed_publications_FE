@@ -13,6 +13,7 @@ export default () => {
 
 	const [recognizedTextArray, setRecognizedTextArray] = useState<Array<{ [key: string]: string }>>([]);
 	const [ImgArray, setImgArray] = useState<string[]>([]);
+
 	const doOCR = async (file: any) => {
 		setOcrText('')
 		setIsLoading(true)
@@ -233,16 +234,53 @@ export default () => {
 
 	const xaos = (e, name) => {
 		const input = e.target.value
-		if (name == 'BBK') setBBK(input)
-		if (name == 'YDK') setYDK(input)
-		if (name == 'author') setAuthor(input)
-		if (name == 'title_publication') setPublicationTitle(input)
-		if (name == 'year_publication') setYear(input)
-		if (name == 'city_publication') setCity(input)
-		if (name == 'ISBN') setISBN(input)
-		if (name == 'type_publication') setType(input)
-		if (name == 'description') setDescription(input)
+		// setRecognizedTextArray((prevState) => {
+		// 	const newState = [...prevState, parseText];
+		// 	setImgArray(prevState => [...prevState, URL.createObjectURL(file)]);
+		// 	setTotalPage((totalPage) => totalPage + 1);
+		// 	return newState;
+		// });
+		if (name == 'BBK') {setBBK(input);
+			updateField('ББК', input)
+		};
+		if (name == 'YDK') {setYDK(input)
+			updateField('УДК', input)
+		};
+		if (name == 'author') {setAuthor(input)
+			updateField('Автор', input)
+		};
+		if (name == 'title_publication') {setPublicationTitle(input)
+			updateField('Название книги', input)
+		};
+		if (name == 'year_publication') {setYear(input)
+			updateField('Год публикации', input)
+		};
+		if (name == 'city_publication') {setCity(input)
+			updateField('Город издания', input)
+		};
+		if (name == 'ISBN') {setISBN(input)
+			updateField('ISBN', input)
+		};
+		if (name == 'type_publication') {setType(input)
+			updateField('Тип издания', input)
+		};
+		if (name == 'description') {setDescription(input)
+			updateField('Описание', input)
+		};
 	}
+
+	const updateField = (fieldName, newValue) => {
+		setRecognizedTextArray(prevArray => {
+		  const newArray = [...prevArray];
+		  const currentIndex = currentPage - 1;
+		  if (currentIndex >= 0 && currentIndex < newArray.length) {
+			const updatedObject = { ...newArray[currentIndex] };
+			updatedObject[fieldName] = newValue;
+			newArray[currentIndex] = updatedObject;
+		  }
+		  return newArray;
+		});
+	  };
 
 	const goToPreviousPage = () => {
 		if (currentPage > 1) {
@@ -336,7 +374,7 @@ export default () => {
 			title: recognizedTextArray[currentPage-1]['Название книги'],
 			date: yearNumber, 
 			city: recognizedTextArray[currentPage-1]['Город издания'],
-			description: "",
+			description: recognizedTextArray[currentPage - 1]['Описание'],
 			quantity: 1,
 			lbc: recognizedTextArray[currentPage-1]['ББК'],
 			udc: recognizedTextArray[currentPage-1]['УДК'],

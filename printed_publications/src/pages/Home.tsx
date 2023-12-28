@@ -155,6 +155,7 @@ export default () => {
           ...book,
           key: String(index + 1),
         }));
+        console.log(booksWithKeys);
         return booksWithKeys;
       } catch (error) {
         console.error('Ошибка:', error);

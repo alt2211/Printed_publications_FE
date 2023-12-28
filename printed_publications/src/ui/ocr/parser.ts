@@ -96,6 +96,7 @@ const parseTextByRegex = text => {
 
 		}
 		result['Тип издания'] = 'Художественное'
+		result['Описание'] = 'Описание'
 	}
 
 	// console.log(result)

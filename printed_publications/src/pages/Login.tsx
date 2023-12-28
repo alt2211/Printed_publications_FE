@@ -176,7 +176,14 @@ const RegPage = () => {
           message: 'Пользователь',
           description: message.message,
           duration: 1,
-        });
+        })
+      }
+      else{
+        notification.success({
+          message: 'Пользователь',
+          description: message.message,
+          duration: 1,
+        })
       }
     }
     catch (error) {
