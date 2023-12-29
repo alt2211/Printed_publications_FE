@@ -49,8 +49,12 @@ export default () => {
 				console.error('Ошибка во время распознавания:', error);
 				setIsLoading(false);
 			});
-
 	}
+	const [isVisible, setIsVisible] = useState(true);
+
+	const toggleVisibility = () => {
+	  setIsVisible(!isVisible);
+	};
 
 	const [drag, setDrag] = React.useState(false)
 	const fileInputRef = useRef<HTMLInputElement>(null)
@@ -306,6 +310,10 @@ export default () => {
 				updateInputFields(newPage)
 				return newPage
 			})
+			if (isVisible === true)
+			{
+				toggleVisibility();
+			}
 		}
 	}
 	const updateInputFields = (page: number) => {
@@ -472,10 +480,7 @@ export default () => {
 					</button>
 				</div>
 				<div className={style.bottomElement2}>
-					{/* <button className={style.addMore} onClick={e => dragLeaveHandler(e)}>
-						Добавить еще
-					</button> */}
-					<button className={style.save} onClick={saveBook}>Сохранить</button>
+					<button style={{ visibility: isVisible ? 'hidden' : 'visible' }} className={style.save} onClick={saveBook}>Сохранить</button>
 				</div>
 			</div>
 		</>
