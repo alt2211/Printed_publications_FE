@@ -25,13 +25,6 @@ export default () => {
 			logger: m => console.log(Math.floor(m.progress * 100)),
 		})
 
-		// const { data } = await worker.recognize(file)
-		// setOcrText(data.text)
-		// setIsLoading(false)
-		// parseText = parseTextByRegex(data.text)
-		// console.log(parseText)
-		// setRecognizedTextArray(prevState => [...prevState, parseText]);
-
 		worker.recognize(file)
 			.then(({ data }) => {
 				setOcrText(data.text);
