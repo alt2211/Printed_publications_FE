@@ -12,8 +12,11 @@ import { Form, Input, Popconfirm, Table, Select } from 'antd';
 import type { FormInstance } from 'antd/es/form';
 import ConfirmationModal from "../ui-kit/confirmation/confirmation.tsx";
 import generateAndDownloadCSV from "../functions/exportList.tsx";
+import { MainContext } from "../MainContext.ts";
+import { log } from "console";
 
 export default () => {
+  const { user, logout} = useContext(MainContext);
   const EditableContext = React.createContext<FormInstance<any> | null>(null);
 
   let elementDrop = '';
@@ -137,20 +140,24 @@ export default () => {
       label: 'Все авторы',
     });
     const [bookData, setBookData] = useState<Book[]>([]);
+
     const handleLoadBooks = async () => {
       const userString = localStorage.getItem('user');
       const user = userString ? JSON.parse(userString) : null;
+      const token = localStorage.getItem('token');
       try {
         const response = await fetch('http://localhost:5000/loadList', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            'Authorization': `${token}`,
           },
           body: JSON.stringify({
             userId: user.id,
           }),
         });
         const booksFromServer = await response.json();
+        if (booksFromServer.error) logout();
         const booksWithKeys = booksFromServer.map((book, index) => ({
           ...book,
           key: String(index + 1),
@@ -159,6 +166,7 @@ export default () => {
         return booksWithKeys;
       } catch (error) {
         console.error('Ошибка:', error);
+        logout();
       }
     };
 
@@ -181,17 +189,22 @@ export default () => {
 
     const handleDelete = (key: React.Key) => {
       const indexBD = parseInt(String(key), 10);
+      const token = localStorage.getItem('token');
       const handleDeleteBD = async () => {
         try {
           const response = await fetch('http://localhost:5000/deleteBook', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
+              'Authorization': `${token}`,
             },
             body: JSON.stringify(bookData[indexBD - 1]),
           });
+          const userData = await response.json();
+          if (userData.error) logout();
         } catch (error) {
           console.error('Ошибка:', error);
+          logout();
         }
       };
       handleDeleteBD();
@@ -275,16 +288,21 @@ export default () => {
         ...row,
       });
       const handleEditBook = async () => {
+        const token = localStorage.getItem('token'); 
         try {
           const response = await fetch('http://localhost:5000/editBook', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
+              'Authorization': `${token}`,
             },
             body: JSON.stringify(newData[index]),
           });
+          const userData = await response.json();
+          if (userData.error) logout();
         } catch (error) {
           console.error('Ошибка:', error);
+          logout();
         }
       };
       handleEditBook();
@@ -405,6 +423,7 @@ export default () => {
     const user = userString ? JSON.parse(userString) : null;
     const [isModalVisible, setModalVisible] = useState(false);
     const handleConfirm = async () => {
+      const token = localStorage.getItem('token');
       console.log('Действие подтверждено');
       setModalVisible(false);
       try {
@@ -412,13 +431,17 @@ export default () => {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            'Authorization': `${token}`,
           },
           body: JSON.stringify({
             id: user.id,
           }),
         });
+        const userData = await response.json();
+          if (userData.error) logout();
       } catch (error) {
         console.error('Ошибка:', error);
+        logout();
       }
     };
     const handleCancel = () => {

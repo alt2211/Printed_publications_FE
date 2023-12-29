@@ -1,13 +1,15 @@
 // @ts-ignore
-import React, { useRef, useState } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import { createWorker } from 'tesseract.js'
 import '../Styles/App.css'
 import style from '../ui/ocr/ocr.module.scss'
 import parseTextByRegex from '../ui/ocr/parser.ts'
 import { Book } from '../../types/Book.ts'
+import { MainContext } from "../MainContext.ts";
 
 
 export default () => {
+	const { user, logout} = useContext(MainContext);
 	const [isLoading, setIsLoading] = useState<boolean>(false)
 	const [ocrText, setOcrText] = useState<string>('')
 
@@ -383,17 +385,22 @@ export default () => {
 		};
 
 		const handleAddBook = async () => {
+			const token = localStorage.getItem('token');   
 			try {
 				//Переделать через env
 				const response = await fetch('http://localhost:5000/addBook', {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',
+						'Authorization': `${token}`,
 					},
 					body: JSON.stringify(dbBook),
 				});
+				const userData = await response.json();
+          		if (userData.error) logout();
 			} catch (error) {
 				console.error('Ошибка:', error);
+				logout();
 			}
 		};
 		handleAddBook();

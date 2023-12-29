@@ -18,6 +18,7 @@ export default () => {
   const logout = () => {
     const u = {} as IUser
     localStorage.setItem('user', JSON.stringify(u))
+    localStorage.setItem('token', JSON.stringify(u))
     setUser(u)
   }
 

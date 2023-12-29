@@ -42,57 +42,77 @@ const Settings = () => {
     logout();
   }
   const handleEmailChange = async () => {
+    const token = localStorage.getItem('token');   
     try {
       //Переделать через env
       const response = await fetch('http://localhost:5000/changeEmail', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `${token}`,
         },
         body: JSON.stringify({
           userId: user.id,
           newEmail: email,
         }),
       });
-
+      const userData = await response.json();
+          if (userData.error) logout();
     } catch (error) {
       console.error('Ошибка:', error);
+      logout();
     }
   };
 
   const handlePasswordChange = async (newPassword) => {
+    const token = localStorage.getItem('token');   
     try {
       //Переделать через env
       const response = await fetch('http://localhost:5000/cp/changePassword', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `${token}`,
         },
         body: JSON.stringify({
           userId: user.id,
           newPassword: newPassword,
         }),
       });
-
+      const userData = await response.json();
+          if (userData.error) logout();
     } catch (error) {
       console.error('Ошибка:', error);
+      logout();
     }
   };
   const handleDeleteAccount = async () => {
+    const token = localStorage.getItem('token');  
     try {
       //Переделать через env
       const response = await fetch('http://localhost:5000/deleteAccount', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `${token}`,
         },
         body: JSON.stringify({
           userId: user.id,
         }),
       });
-      logout();
+      const userData = await response.json();
+          if (!userData.error) logout();
+          else{
+            notification.error({
+              message: 'Пользователь',
+              description: userData.error,
+              duration: 1,
+            });
+            logout();
+          }
     } catch (error) {
       console.error('Ошибка:', error);
+      logout();
     }
   };
 
