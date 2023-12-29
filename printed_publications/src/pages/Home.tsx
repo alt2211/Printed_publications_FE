@@ -94,11 +94,7 @@ export default () => {
     };
 
     let childNode = children;
-
-    // const columnRules = {
-    //   author: { required: true },
-    // };
-
+    
     if (editable) {
       childNode = editing ? (
         <Form.Item

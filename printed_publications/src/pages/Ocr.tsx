@@ -10,7 +10,7 @@ import { notification } from 'antd';
 
 
 export default () => {
-	const { user, logout} = useContext(MainContext);
+	const { logout} = useContext(MainContext);
 	const [isLoading, setIsLoading] = useState<boolean>(false)
 	const [ocrText, setOcrText] = useState<string>('')
 
