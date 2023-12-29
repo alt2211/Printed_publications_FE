@@ -6,6 +6,7 @@ import style from '../ui/ocr/ocr.module.scss'
 import parseTextByRegex from '../ui/ocr/parser.ts'
 import { Book } from '../../types/Book.ts'
 import { MainContext } from "../MainContext.ts";
+import { notification } from 'antd';
 
 
 export default () => {
@@ -397,7 +398,14 @@ export default () => {
 					body: JSON.stringify(dbBook),
 				});
 				const userData = await response.json();
-          		if (userData.error) logout();
+          		if (userData.error) logout()
+				else {
+			        notification.success({
+						message: 'Успех',
+						description: userData.message,
+						duration: 1,
+					  });
+				}
 			} catch (error) {
 				console.error('Ошибка:', error);
 				logout();

@@ -57,7 +57,14 @@ const Settings = () => {
         }),
       });
       const userData = await response.json();
-          if (userData.error) logout();
+          if (userData.error) logout()
+          else{
+            notification.success({
+              message: 'Успех',
+              description: userData.message,
+              duration: 1,
+              });
+            }
     } catch (error) {
       console.error('Ошибка:', error);
       logout();
@@ -80,7 +87,14 @@ const Settings = () => {
         }),
       });
       const userData = await response.json();
-          if (userData.error) logout();
+          if (userData.error) logout() 
+          else{
+            notification.success({
+              message: 'Успех',
+              description: userData.message,
+              duration: 1,
+              });
+          }
     } catch (error) {
       console.error('Ошибка:', error);
       logout();
@@ -101,7 +115,14 @@ const Settings = () => {
         }),
       });
       const userData = await response.json();
-          if (!userData.error) logout();
+          if (!userData.error) {
+            notification.success({
+              message: 'Успех',
+              description: userData.message,
+              duration: 1,
+            });
+            logout();
+          }
           else{
             notification.error({
               message: 'Пользователь',

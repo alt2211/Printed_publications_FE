@@ -14,6 +14,7 @@ import ConfirmationModal from "../ui-kit/confirmation/confirmation.tsx";
 import generateAndDownloadCSV from "../functions/exportList.tsx";
 import { MainContext } from "../MainContext.ts";
 import { log } from "console";
+import { notification } from 'antd';
 
 export default () => {
   const { user, logout} = useContext(MainContext);
@@ -201,7 +202,13 @@ export default () => {
             body: JSON.stringify(bookData[indexBD - 1]),
           });
           const userData = await response.json();
-          if (userData.error) logout();
+          if (userData.error) logout() 
+          else{
+            notification.success({
+              message: 'Успех',
+              description: userData.message,
+              duration: 1,
+              });}
         } catch (error) {
           console.error('Ошибка:', error);
           logout();
@@ -299,7 +306,14 @@ export default () => {
             body: JSON.stringify(newData[index]),
           });
           const userData = await response.json();
-          if (userData.error) logout();
+          if (userData.error) logout() 
+          else {
+            notification.success({
+              message: 'Успех',
+              description: userData.message,
+              duration: 1,
+              });
+        }
         } catch (error) {
           console.error('Ошибка:', error);
           logout();
@@ -424,7 +438,6 @@ export default () => {
     const [isModalVisible, setModalVisible] = useState(false);
     const handleConfirm = async () => {
       const token = localStorage.getItem('token');
-      console.log('Действие подтверждено');
       setModalVisible(false);
       try {
         const response = await fetch('http://localhost:5000/deleteAllBooks', {
@@ -438,7 +451,9 @@ export default () => {
           }),
         });
         const userData = await response.json();
-          if (userData.error) logout();
+          if (userData.error) logout() 
+          else {
+              window.location.reload();}
       } catch (error) {
         console.error('Ошибка:', error);
         logout();
